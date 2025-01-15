@@ -18,9 +18,11 @@ namespace ProjectFG
         private const double HYPPYNOPEUS = 500;
         private const int RUUDUN_KOKO = 40;
 
-        private PlatformCharacter pelaaja1;
 
-        private Image pelaajanKuva = LoadImage("norsu.png");
+        private PlatformCharacter pelaaja1;
+        private PlatformCharacter pelaaja2;
+        private Image pelaajakuva1 = LoadImage("playerkuva.png");
+        private Image pelaajakuva2 = LoadImage("playerkuva2.png");
         private Image tahtiKuva = LoadImage("tahti.png");
 
         private SoundEffect maaliAani = LoadSoundEffect("maali.wav");
@@ -32,7 +34,7 @@ namespace ProjectFG
             LuoKentta();
             LisaaNappaimet();
             Camera.Position = pelaaja1.Position;
-
+            Camera.Position = pelaaja2.Position;
 
 
             Camera.ZoomFactor = 1.0;
@@ -47,6 +49,7 @@ namespace ProjectFG
             kentta.SetTileMethod('#', LisaaTaso);
             kentta.SetTileMethod('*', LisaaTahti);
             kentta.SetTileMethod('N', LisaaPelaaja);
+            kentta.SetTileMethod('M', LisaaPelaaja2);
             kentta.Execute(RUUDUN_KOKO, RUUDUN_KOKO);
             Level.CreateBorders();
             Level.Background.CreateGradient(Color.White, Color.SkyBlue);
@@ -75,8 +78,17 @@ namespace ProjectFG
             pelaaja1 = new PlatformCharacter(leveys, korkeus);
             pelaaja1.Position = paikka;
             pelaaja1.Mass = 4.0;
-            pelaaja1.Image = pelaajanKuva;
+            pelaaja1.Image = pelaajakuva1;
             Add(pelaaja1);
+        }
+        
+        private void LisaaPelaaja2(Vector paikka, double leveys, double korkeus)
+        {
+            pelaaja2 = new PlatformCharacter(leveys, korkeus);
+            pelaaja2.Position = paikka;
+            pelaaja2.Mass = 4.0;
+            pelaaja2.Image = pelaajakuva2;
+            Add(pelaaja2);
         }
 
         private void LisaaNappaimet()
@@ -88,6 +100,11 @@ namespace ProjectFG
             Keyboard.Listen(Key.D, ButtonState.Down, Liikuta, "Liikkuu vasemmalle", pelaaja1, NOPEUS);
             Keyboard.Listen(Key.W, ButtonState.Pressed, Hyppaa, "Pelaaja hyppää", pelaaja1, HYPPYNOPEUS);
 
+            
+            Keyboard.Listen(Key.Left, ButtonState.Down, Liikuta, "Liikkuu vasemmalle", pelaaja2, -NOPEUS);
+            Keyboard.Listen(Key.Right, ButtonState.Down, Liikuta, "Liikkuu vasemmalle", pelaaja2, NOPEUS);
+            Keyboard.Listen(Key.Up, ButtonState.Pressed, Hyppaa, "Pelaaja hyppää", pelaaja2, HYPPYNOPEUS);
+            
             ControllerOne.Listen(Button.Back, ButtonState.Pressed, Exit, "Poistu pelistä");
 
             ControllerOne.Listen(Button.DPadLeft, ButtonState.Down, Liikuta, "Pelaaja liikkuu vasemmalle", pelaaja1, -NOPEUS);
