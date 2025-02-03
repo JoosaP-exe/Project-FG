@@ -1,5 +1,7 @@
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
+using System.ComponentModel.Design;
 using Jypeli;
 using Jypeli.Assets;
 using Jypeli.Controls;
@@ -17,36 +19,97 @@ namespace ProjectFG
         private const double NOPEUS = 200;
         private const double HYPPYNOPEUS = 500;
         private const int RUUDUN_KOKO = 40;
+    private PlatformCharacter pelaaja1;
+    private PlatformCharacter pelaaja2;
+    private ProgressBar healthBar1;
+    private ProgressBar healthBar2;
+private const double MAX_HEALTH = 100;
+private double player1Health = MAX_HEALTH;
+private double player2Health = MAX_HEALTH;
 
-        private PlatformCharacter pelaaja1;
+    private void InitializePlayers()
+    {
+        pelaaja1 = new PlatformCharacter(50, 50);
+        pelaaja2 = new PlatformCharacter(50, 50);
+    }
 
-        private Image pelaajanKuva = LoadImage("norsu.png");
+
+        private void InitializeHealthBars()
+{
+    healthBar1 = new ProgressBar(250, 20);
+    healthBar1.X = Screen.Left + 120;
+    healthBar1.Y = Screen.Top - 50;
+    healthBar1.Color = Color.Green;
+    healthBar1.BorderColor = Color.Black;
+    healthBar1.Width = 200;
+    Add(healthBar1);
+
+
+    healthBar2 = new ProgressBar(250, 20);
+    healthBar2.X = Screen.Right - 120;
+    healthBar2.Y = Screen.Top - 50;
+    healthBar2.Color = Color.Green;
+    healthBar2.BorderColor = Color.Black;
+    healthBar2.Width = 200;
+    Add(healthBar2);
+}
+
+
+
+
+public override void Begin()
+{
+    Gravity = new Vector(0, -1000);
+
+    InitializePlayers();
+    InitializeHealthBars();
+    LuoKentta();
+    LisaaNappaimet();
+
+    Camera.Position = new Vector(0, 0);
+    Camera.ZoomFactor = 0.4;
+    Camera.StayInLevel = true;
+
+    MasterVolume = 0.5;
+}
+
+private void TakeDamage(ref double playerHealth, ProgressBar healthBar, double damage)
+{
+    playerHealth -= damage;
+    if (playerHealth < 0) playerHealth = 0;
+
+    double progressRatio = playerHealth / MAX_HEALTH;
+    healthBar.Width = progressRatio * 200;
+
+    UpdateHealthBarColor(healthBar, progressRatio);
+}
+
+
+private void UpdateHealthBarColor(ProgressBar healthBar, double progressRatio)
+{
+    if (progressRatio <= 0.3)
+    {
+        healthBar.Color = Color.Red;
+    }
+    else
+    {
+        healthBar.Color = Color.Green;
+    }
+}
+
+        private Image pelaajakuva1 = LoadImage("playerkuva.png");
+        private Image pelaajakuva2 = LoadImage("playerkuva2.png");
         private Image tahtiKuva = LoadImage("tahti.png");
 
         private SoundEffect maaliAani = LoadSoundEffect("maali.wav");
 
-        public override void Begin()
-        {
-            Gravity = new Vector(0, -1000);
-
-            LuoKentta();
-            LisaaNappaimet();
-            Camera.Position = pelaaja1.Position;
-
-
-
-            Camera.ZoomFactor = 1.0;
-            Camera.StayInLevel = true;
-
-            MasterVolume = 0.5;
-        }
 
         private void LuoKentta()
         {
             TileMap kentta = TileMap.FromLevelAsset("kentta1.txt");
             kentta.SetTileMethod('#', LisaaTaso);
-            kentta.SetTileMethod('*', LisaaTahti);
             kentta.SetTileMethod('N', LisaaPelaaja);
+            kentta.SetTileMethod('M', LisaaPelaaja2);
             kentta.Execute(RUUDUN_KOKO, RUUDUN_KOKO);
             Level.CreateBorders();
             Level.Background.CreateGradient(Color.White, Color.SkyBlue);
@@ -60,23 +123,22 @@ namespace ProjectFG
             Add(taso);
         }
 
-        private void LisaaTahti(Vector paikka, double leveys, double korkeus)
-        {
-            PhysicsObject tahti = PhysicsObject.CreateStaticObject(leveys, korkeus);
-            tahti.IgnoresCollisionResponse = true;
-            tahti.Position = paikka;
-            tahti.Image = tahtiKuva;
-            tahti.Tag = "tahti";
-            Add(tahti);
-        }
-
         private void LisaaPelaaja(Vector paikka, double leveys, double korkeus)
         {
             pelaaja1 = new PlatformCharacter(leveys, korkeus);
             pelaaja1.Position = paikka;
             pelaaja1.Mass = 4.0;
-            pelaaja1.Image = pelaajanKuva;
+            pelaaja1.Image = pelaajakuva1;
             Add(pelaaja1);
+        }
+        
+        private void LisaaPelaaja2(Vector paikka, double leveys, double korkeus)
+        {
+            pelaaja2 = new PlatformCharacter(leveys, korkeus);
+            pelaaja2.Position = paikka;
+            pelaaja2.Mass = 4.0;
+            pelaaja2.Image = pelaajakuva2;
+            Add(pelaaja2);
         }
 
         private void LisaaNappaimet()
@@ -88,6 +150,11 @@ namespace ProjectFG
             Keyboard.Listen(Key.D, ButtonState.Down, Liikuta, "Liikkuu vasemmalle", pelaaja1, NOPEUS);
             Keyboard.Listen(Key.W, ButtonState.Pressed, Hyppaa, "Pelaaja hyppää", pelaaja1, HYPPYNOPEUS);
 
+            
+            Keyboard.Listen(Key.Left, ButtonState.Down, Liikuta, "Liikkuu vasemmalle", pelaaja2, -NOPEUS);
+            Keyboard.Listen(Key.Right, ButtonState.Down, Liikuta, "Liikkuu vasemmalle", pelaaja2, NOPEUS);
+            Keyboard.Listen(Key.Up, ButtonState.Pressed, Hyppaa, "Pelaaja hyppää", pelaaja2, HYPPYNOPEUS);
+            
             ControllerOne.Listen(Button.Back, ButtonState.Pressed, Exit, "Poistu pelistä");
 
             ControllerOne.Listen(Button.DPadLeft, ButtonState.Down, Liikuta, "Pelaaja liikkuu vasemmalle", pelaaja1, -NOPEUS);
