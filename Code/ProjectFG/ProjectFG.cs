@@ -43,17 +43,15 @@ private double player2Health = MAX_HEALTH;
         hitbox2.Position = pelaaja2.Position;
         hitbox2.IsVisible = true;
         hitbox1.IgnoresGravity = true;
-        hitbox1.CollisionIgnoreGroup = 2;
+        hitbox1.CollisionIgnoreGroup = 1;
         Add(hitbox2);
     }
 
     private void InitializePlayers()
     {
         pelaaja1 = new PlatformCharacter(50, 50);
-        pelaaja1.CollisionIgnoreGroup = 1;
 
         pelaaja2 = new PlatformCharacter(50, 50);
-        pelaaja2.CollisionIgnoreGroup = 2;
     }
 
 
@@ -91,12 +89,19 @@ public override void Begin()
     InitializeHealthBars();
     LuoKentta();
     LisaaNappaimet();
+    InitalizeHitboxes();
 
     Camera.Position = new Vector(0, 0);
     Camera.ZoomFactor = 2;
     Camera.StayInLevel = false;
 
     MasterVolume = 0.5;
+}
+
+
+private void attack1()
+{
+
 }
 
 
@@ -156,6 +161,7 @@ private void UpdateHealthBarColor(ProgressBar healthBar, double progressRatio)
             pelaaja1.Position = paikka;
             pelaaja1.Mass = 4.0;
             pelaaja1.Image = pelaajakuva1;
+            pelaaja1.CollisionIgnoreGroup = 1;
             Add(pelaaja1);
         }
         
@@ -165,6 +171,7 @@ private void UpdateHealthBarColor(ProgressBar healthBar, double progressRatio)
             pelaaja2.Position = paikka;
             pelaaja2.Mass = 4.0;
             pelaaja2.Image = pelaajakuva2;
+            pelaaja2.CollisionIgnoreGroup = 1;
             Add(pelaaja2);
         }
 
