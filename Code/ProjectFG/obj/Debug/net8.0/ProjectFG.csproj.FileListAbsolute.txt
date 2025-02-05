@@ -1,7 +1,6 @@
 K:\GitKraken\FG\Code\ProjectFG\bin\Debug\net8.0\ProjectFG.exe
 K:\GitKraken\FG\Code\ProjectFG\bin\Debug\net8.0\Content\kentta1.txt
 K:\GitKraken\FG\Code\ProjectFG\bin\Debug\net8.0\Content\maali.wav
-K:\GitKraken\FG\Code\ProjectFG\bin\Debug\net8.0\Content\norsu.png
 K:\GitKraken\FG\Code\ProjectFG\bin\Debug\net8.0\Content\tahti.png
 K:\GitKraken\FG\Code\ProjectFG\bin\Debug\net8.0\ProjectFG.deps.json
 K:\GitKraken\FG\Code\ProjectFG\bin\Debug\net8.0\ProjectFG.runtimeconfig.json
@@ -113,3 +112,5 @@ C:\Users\gr301855\OneDrive - Jyväskylän koulutuskuntayhtymä Gradia\Työpöyt�
 C:\Users\gr301855\OneDrive - Jyväskylän koulutuskuntayhtymä Gradia\Työpöytä\gitkraken\siistiäkoodia\Code\ProjectFG\obj\Debug\net8.0\ProjectFG.csproj.Up2Date
 C:\Users\gr301855\OneDrive - Jyväskylän koulutuskuntayhtymä Gradia\Työpöytä\gitkraken\siistiäkoodia\Code\ProjectFG\obj\Debug\net8.0\ProjectFG.genruntimeconfig.cache
 C:\Users\gr301855\OneDrive - Jyväskylän koulutuskuntayhtymä Gradia\Työpöytä\gitkraken\siistiäkoodia\Code\ProjectFG\obj\Debug\net8.0\ref\ProjectFG.dll
+K:\GitKraken\FG\Code\ProjectFG\bin\Debug\net8.0\Content\playerkuva.png
+K:\GitKraken\FG\Code\ProjectFG\bin\Debug\net8.0\Content\playerkuva2.png

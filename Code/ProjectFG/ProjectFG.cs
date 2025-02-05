@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.ComponentModel.Design;
+using FarseerPhysics.Collision;
 using Jypeli;
 using Jypeli.Assets;
 using Jypeli.Controls;
@@ -21,16 +22,38 @@ namespace ProjectFG
         private const int RUUDUN_KOKO = 40;
     private PlatformCharacter pelaaja1;
     private PlatformCharacter pelaaja2;
+    private PhysicsObject hitbox1;
+    private PhysicsObject hitbox2;
     private ProgressBar healthBar1;
     private ProgressBar healthBar2;
 private const double MAX_HEALTH = 100;
 private double player1Health = MAX_HEALTH;
 private double player2Health = MAX_HEALTH;
 
+    private void InitalizeHitboxes()
+    {
+        hitbox1 = new PhysicsObject(50, 50);
+        hitbox1.Position = pelaaja1.Position;
+        hitbox1.IsVisible = true;
+        hitbox1.IgnoresGravity = true;
+        hitbox1.CollisionIgnoreGroup = 1;
+        Add(hitbox1);
+
+        hitbox2 = new PhysicsObject(50, 50);
+        hitbox2.Position = pelaaja2.Position;
+        hitbox2.IsVisible = true;
+        hitbox1.IgnoresGravity = true;
+        hitbox1.CollisionIgnoreGroup = 2;
+        Add(hitbox2);
+    }
+
     private void InitializePlayers()
     {
         pelaaja1 = new PlatformCharacter(50, 50);
+        pelaaja1.CollisionIgnoreGroup = 1;
+
         pelaaja2 = new PlatformCharacter(50, 50);
+        pelaaja2.CollisionIgnoreGroup = 2;
     }
 
 
@@ -57,9 +80,12 @@ private double player2Health = MAX_HEALTH;
 
 
 
+
+
 public override void Begin()
 {
     Gravity = new Vector(0, -1000);
+    SetWindowSize(1920, 1080, true);
 
     InitializePlayers();
     InitializeHealthBars();
@@ -67,11 +93,12 @@ public override void Begin()
     LisaaNappaimet();
 
     Camera.Position = new Vector(0, 0);
-    Camera.ZoomFactor = 0.4;
-    Camera.StayInLevel = true;
+    Camera.ZoomFactor = 2;
+    Camera.StayInLevel = false;
 
     MasterVolume = 0.5;
 }
+
 
 private void TakeDamage(ref double playerHealth, ProgressBar healthBar, double damage)
 {
@@ -111,13 +138,13 @@ private void UpdateHealthBarColor(ProgressBar healthBar, double progressRatio)
             kentta.SetTileMethod('N', LisaaPelaaja);
             kentta.SetTileMethod('M', LisaaPelaaja2);
             kentta.Execute(RUUDUN_KOKO, RUUDUN_KOKO);
-            Level.CreateBorders();
+
             Level.Background.CreateGradient(Color.White, Color.SkyBlue);
         }
 
         private void LisaaTaso(Vector paikka, double leveys, double korkeus)
         {
-            PhysicsObject taso = PhysicsObject.CreateStaticObject(leveys, korkeus);
+            PhysicsObject taso = PhysicsObject.CreateStaticObject(leveys, korkeus+10);
             taso.Position = paikka;
             taso.Color = Color.Green;
             Add(taso);
