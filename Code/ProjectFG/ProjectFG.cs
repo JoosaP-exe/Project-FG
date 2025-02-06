@@ -78,9 +78,8 @@ public override void Begin()
     InitializePlayers();
     InitializeHealthBars();
     LuoKentta();
-    LisaaNappaimet();
-    Hitboxloop();
     LisaaHitbox(50, 50);
+    LisaaNappaimet();
     InitalizeHitboxes();
 
     Camera.Position = new Vector(0, 0);
@@ -147,24 +146,17 @@ private void UpdateHealthBarColor(ProgressBar healthBar, double progressRatio)
             Add(taso);
         }
 
-        private void Hitboxloop()
-        {
-            while (hitbox1.Position != pelaaja1.Position && hitbox2.Position != pelaaja2.Position)
-            {
-                HitboxMove(hitbox1, pelaaja1);
-                HitboxMove(hitbox2, pelaaja2);
-            }
-        }
-
         private void LisaaHitbox(double leveys, double korkeus)
         {
             PhysicsObject hitbox1 = PhysicsObject.CreateStaticObject(leveys, korkeus);
+            hitbox1.Position = pelaaja1.Position;
             hitbox1.Color = Color.Red;
             hitbox1.IgnoresGravity = true;
             hitbox1.CollisionIgnoreGroup = 1;
             Add(hitbox1);
 
             PhysicsObject hitbox2 = PhysicsObject.CreateStaticObject(leveys, korkeus);
+            hitbox2.Position = pelaaja2.Position;
             hitbox2.Color = Color.Red;
             hitbox2.IgnoresGravity = true;
             hitbox2.CollisionIgnoreGroup = 1;
@@ -180,7 +172,6 @@ private void UpdateHealthBarColor(ProgressBar healthBar, double progressRatio)
             pelaaja1.Image = pelaajakuva1;
             pelaaja1.CollisionIgnoreGroup = 1;
             Add(pelaaja1);
-            Add(hitbox1);
         }
         
         private void LisaaPelaaja2(Vector paikka, double leveys, double korkeus)
@@ -191,19 +182,6 @@ private void UpdateHealthBarColor(ProgressBar healthBar, double progressRatio)
             pelaaja2.Image = pelaajakuva2;
             pelaaja2.CollisionIgnoreGroup = 1;
             Add(pelaaja2);
-        }
-
-        private void DeathCheck()
-        {
-            if (pelaaja1.Bottom < Level.Bottom)
-            {
-                pelaaja1.Destroy();
-            }
-
-            if (pelaaja2.Bottom < Level.Bottom)
-            {
-                pelaaja2.Destroy();
-            }
         }
 
         private void LisaaNappaimet()
@@ -237,11 +215,6 @@ private void UpdateHealthBarColor(ProgressBar healthBar, double progressRatio)
         private void Hyppaa(PlatformCharacter hahmo, double nopeus)
         {
             hahmo.Jump(nopeus);
-        }
-
-        private void HitboxMove(PhysicsObject hitbox, PlatformCharacter hahmo)
-        {
-            hitbox.Position = hahmo.Position;
         }
     }
 
