@@ -73,7 +73,7 @@ private double player2Health = MAX_HEALTH;
 public override void Begin()
 {
     Gravity = new Vector(0, -1000);
-    SetWindowSize(1920, 1080, true);
+    SetWindowSize(1920, 1200, true);
 
     InitializePlayers();
     InitializeHealthBars();
