@@ -19,9 +19,6 @@ namespace ProjectFG
     {
     private ProgressBar healthBar1;
     private ProgressBar healthBar2;
-private const double MAX_HEALTH = 100;
-private double player1Health = MAX_HEALTH;
-private double player2Health = MAX_HEALTH;
 
 
         private void InitializeHealthBars()
@@ -54,12 +51,11 @@ public override void Begin()
     Gravity = new Vector(0, -1000);
     SetWindowSize(1920, 1200, true);
 
-    InitializePlayers();
     InitializeHealthBars();
     LuoKentta();
-    LisaaHitbox(50, 50);
+    LisaaHitbox(pelaaja1, pelaaja2);
     LisaaNappaimet();
-    InitalizeHitboxes();
+    /// LocationListener(hitbox1, pelaaja1);
 
     Camera.Position = new Vector(0, 0);
     Camera.ZoomFactor = 2;
@@ -121,6 +117,16 @@ private void UpdateHealthBarColor(ProgressBar healthBar, double progressRatio)
         }
         
 
+        private void LocationListener(PhysicsObject hitbox2, PhysicsObject pelaaja2)
+        {
+            while (pelaaja2.Position != hitbox2.Position)
+            {
+                hitbox2.Position = pelaaja2.Position;
+            }
+            
+        }
+
+
         private void LisaaNappaimet()
         {
             Keyboard.Listen(Key.F1, ButtonState.Pressed, ShowControlHelp, "Näytä ohjeet");
@@ -134,6 +140,7 @@ private void UpdateHealthBarColor(ProgressBar healthBar, double progressRatio)
             Keyboard.Listen(Key.Left, ButtonState.Down, Liikuta, "Liikkuu vasemmalle", pelaaja2, -NOPEUS);
             Keyboard.Listen(Key.Right, ButtonState.Down, Liikuta, "Liikkuu vasemmalle", pelaaja2, NOPEUS);
             Keyboard.Listen(Key.Up, ButtonState.Pressed, Hyppaa, "Pelaaja hyppää", pelaaja2, HYPPYNOPEUS);
+            Keyboard.Listen(Key.Down, ButtonState.Pressed, Hyppaa, "Pelaaja ALAS!", pelaaja2, -HYPPYNOPEUS);
             
             ControllerOne.Listen(Button.Back, ButtonState.Pressed, Exit, "Poistu pelistä");
 
