@@ -117,15 +117,6 @@ private void UpdateHealthBarColor(ProgressBar healthBar, double progressRatio)
         }
         
 
-        private void LocationListener(PhysicsObject hitbox2, PhysicsObject pelaaja2)
-        {
-            while (pelaaja2.Position != hitbox2.Position)
-            {
-                hitbox2.Position = pelaaja2.Position;
-            }
-            
-        }
-
 
         private void LisaaNappaimet()
         {
