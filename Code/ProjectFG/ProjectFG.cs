@@ -126,6 +126,8 @@ private void UpdateHealthBarColor(ProgressBar healthBar, double progressRatio)
             Keyboard.Listen(Key.A, ButtonState.Down, Liikuta, "Liikkuu vasemmalle", pelaaja1, -NOPEUS);
             Keyboard.Listen(Key.D, ButtonState.Down, Liikuta, "Liikkuu vasemmalle", pelaaja1, NOPEUS);
             Keyboard.Listen(Key.W, ButtonState.Pressed, Hyppaa, "Pelaaja hyppää", pelaaja1, HYPPYNOPEUS);
+            Keyboard.Listen(Key.Z, ButtonState.Pressed, Boostaa, "Pelaaja BOOST!!", pelaaja1, HYPPYNOPEUS);
+            Keyboard.Listen(Key.F, ButtonState.Pressed, Attacks, "Pelaaja lyö", pelaaja1);
 
             
             Keyboard.Listen(Key.Left, ButtonState.Down, Liikuta, "Liikkuu vasemmalle", pelaaja2, -NOPEUS);
@@ -150,6 +152,11 @@ private void UpdateHealthBarColor(ProgressBar healthBar, double progressRatio)
         private void Hyppaa(PlatformCharacter hahmo, double nopeus)
         {
             hahmo.Jump(nopeus);
+        }
+
+        private void Boostaa(PlatformCharacter hahmo, double nopeus)
+        {
+            hahmo.Velocity = new Vector(750, 750);
         }
     }
 

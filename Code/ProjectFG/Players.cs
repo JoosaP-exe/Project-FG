@@ -42,7 +42,7 @@ public partial class ProjectFG
             Add(pelaaja2);
         }
 
-            private void LisaaHitbox(PlatformCharacter pelaaja1, PhysicsObject pelaaja2)
+            private void LisaaHitbox(PlatformCharacter pelaaja1, PlatformCharacter pelaaja2)
         {
             PhysicsObject hitbox1 = PhysicsObject.CreateStaticObject(21, 32);
             AxleJoint HBL1 = new AxleJoint(hitbox1, pelaaja1);
