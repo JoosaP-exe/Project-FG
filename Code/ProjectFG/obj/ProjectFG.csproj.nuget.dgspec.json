@@ -1,32 +1,25 @@
 {
   "format": 1,
   "restore": {
-    "K:\\GitKraken\\FG\\Code\\ProjectFG\\ProjectFG.csproj": {}
+    "C:\\Users\\gr301855\\OneDrive - Jyväskylän koulutuskuntayhtymä Gradia\\Työpöytä\\gitkraken\\Project-FG\\Code\\ProjectFG\\ProjectFG.csproj": {}
   },
   "projects": {
-    "K:\\GitKraken\\FG\\Code\\ProjectFG\\ProjectFG.csproj": {
+    "C:\\Users\\gr301855\\OneDrive - Jyväskylän koulutuskuntayhtymä Gradia\\Työpöytä\\gitkraken\\Project-FG\\Code\\ProjectFG\\ProjectFG.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "K:\\GitKraken\\FG\\Code\\ProjectFG\\ProjectFG.csproj",
+        "projectUniqueName": "C:\\Users\\gr301855\\OneDrive - Jyväskylän koulutuskuntayhtymä Gradia\\Työpöytä\\gitkraken\\Project-FG\\Code\\ProjectFG\\ProjectFG.csproj",
         "projectName": "ProjectFG",
-        "projectPath": "K:\\GitKraken\\FG\\Code\\ProjectFG\\ProjectFG.csproj",
-        "packagesPath": "C:\\Users\\gr301857\\.nuget\\packages\\",
-        "outputPath": "K:\\GitKraken\\FG\\Code\\ProjectFG\\obj\\",
+        "projectPath": "C:\\Users\\gr301855\\OneDrive - Jyväskylän koulutuskuntayhtymä Gradia\\Työpöytä\\gitkraken\\Project-FG\\Code\\ProjectFG\\ProjectFG.csproj",
+        "packagesPath": "C:\\Users\\gr301855\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\gr301855\\OneDrive - Jyväskylän koulutuskuntayhtymä Gradia\\Työpöytä\\gitkraken\\Project-FG\\Code\\ProjectFG\\obj\\",
         "projectStyle": "PackageReference",
-        "fallbackFolders": [
-          "K:\\Visual Studio\\Shared\\NuGetPackages"
-        ],
         "configFilePaths": [
-          "C:\\Users\\gr301857\\AppData\\Roaming\\NuGet\\NuGet.Config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+          "C:\\Users\\gr301855\\AppData\\Roaming\\NuGet\\NuGet.Config"
         ],
         "originalTargetFrameworks": [
           "net8.0"
         ],
         "sources": {
-          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
-          "C:\\Program Files\\dotnet\\library-packs": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
@@ -43,9 +36,8 @@
         "restoreAuditProperties": {
           "enableAudit": "true",
           "auditLevel": "low",
-          "auditMode": "all"
-        },
-        "SdkAnalysisLevel": "9.0.100"
+          "auditMode": "direct"
+        }
       },
       "frameworks": {
         "net8.0": {
@@ -76,7 +68,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.100/PortableRuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.405/PortableRuntimeIdentifierGraph.json"
         }
       }
     }

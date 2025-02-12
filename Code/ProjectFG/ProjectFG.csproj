@@ -20,7 +20,7 @@
         <None Update="Content\playerkuva.png">
             <CopyToOutputDirectory>Always</CopyToOutputDirectory>
         </None>
-        <None Update="Content\tahti.png">
+        <None Update="Content\taustakuva.png">
             <CopyToOutputDirectory>Always</CopyToOutputDirectory>
         </None>
         <None Update="Content\playerkuva2.png">

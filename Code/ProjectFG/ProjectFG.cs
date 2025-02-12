@@ -21,6 +21,15 @@ namespace ProjectFG
     private ProgressBar healthBar2;
 
 
+public void menu()
+    {
+    string[] vaihtoehdot = { "Aloita peli", "Lopeta" };
+    MultiSelectWindow alkuvalikko = new MultiSelectWindow("MENU", vaihtoehdot);
+        alkuvalikko.AddItemHandler(0, Begin);
+        alkuvalikko.AddItemHandler(1, Exit);
+        Add(alkuvalikko);
+    }
+
         private void InitializeHealthBars()
 {
     healthBar1 = new ProgressBar(250, 20);
@@ -44,14 +53,14 @@ namespace ProjectFG
 
 
 
-
-
+    
 public override void Begin()
 {
     Gravity = new Vector(0, -1000);
     SetWindowSize(1920, 1200, true);
-
+    menu();
     InitializeHealthBars();
+    Exit();
     LuoKentta();
     LisaaHitbox(pelaaja1, pelaaja2);
     LisaaNappaimet();
@@ -92,8 +101,7 @@ private void UpdateHealthBarColor(ProgressBar healthBar, double progressRatio)
 
         private Image pelaajakuva1 = LoadImage("playerkuva.png");
         private Image pelaajakuva2 = LoadImage("playerkuva2.png");
-        private Image tahtiKuva = LoadImage("tahti.png");
-
+        private Image taustakuva = LoadImage("taustakuva.png");
         private SoundEffect maaliAani = LoadSoundEffect("maali.wav");
 
 
@@ -105,7 +113,7 @@ private void UpdateHealthBarColor(ProgressBar healthBar, double progressRatio)
             kentta.SetTileMethod('M', LisaaPelaaja2);
             kentta.Execute(RUUDUN_KOKO, RUUDUN_KOKO);
 
-            Level.Background.CreateGradient(Color.White, Color.SkyBlue);
+            Level.Background.Image = taustakuva;
         }
 
         private void LisaaTaso(Vector paikka, double leveys, double korkeus)
