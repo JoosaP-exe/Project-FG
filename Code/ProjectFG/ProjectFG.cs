@@ -23,22 +23,33 @@ namespace ProjectFG
 
     public override void Begin()
     {
-    SetWindowSize(1920, 1200, true);    
-    string[] vaihtoehdot = { "Aloita peli", "Lopeta" };
-    MultiSelectWindow alkuvalikko = new MultiSelectWindow("MENU", vaihtoehdot);
+        Image menukuva = LoadImage("taustakuva.png");
+        Level.Background.Image = menukuva;
+        SetWindowSize(1920, 1200, true);    
+        string[] vaihtoehdot = { "Aloita peli", "Crediitit", "Lopeta" };
+        MultiSelectWindow alkuvalikko = new MultiSelectWindow("MENU", vaihtoehdot);
         alkuvalikko.AddItemHandler(0, Alotus);
+///        alkuvalikko.AddItemHandler(2, Crediitit);
         alkuvalikko.AddItemHandler(1, Exit);
         Add(alkuvalikko);
     }
 
-        private void InitializeHealthBars()
+
+
+/* public static void Crediitit()
+{
+}*/
+
+
+
+    private void InitializeHealthBars()
 {
     healthBar1 = new ProgressBar(250, 20);
     healthBar1.X = Screen.Left + 120;
     healthBar1.Y = Screen.Top - 50;
     healthBar1.Color = Color.Green;
     healthBar1.BorderColor = Color.Black;
-    healthBar1.Width = 200;
+    healthBar1.Width = 250;
     Add(healthBar1);
 
 
@@ -47,7 +58,7 @@ namespace ProjectFG
     healthBar2.Y = Screen.Top - 50;
     healthBar2.Color = Color.Green;
     healthBar2.BorderColor = Color.Black;
-    healthBar2.Width = 200;
+    healthBar2.Width = 250;
     Add(healthBar2);
 }
 
@@ -72,30 +83,6 @@ public void Alotus()
 }
 
 
-
-private void TakeDamage(ref double playerHealth, ProgressBar healthBar, double damage)
-{
-    playerHealth -= damage;
-    if (playerHealth < 0) playerHealth = 0;
-
-    double progressRatio = playerHealth / MAX_HEALTH;
-    healthBar.Width = progressRatio * 200;
-
-    UpdateHealthBarColor(healthBar, progressRatio);
-}
-
-
-private void UpdateHealthBarColor(ProgressBar healthBar, double progressRatio)
-{
-    if (progressRatio <= 0.3)
-    {
-        healthBar.Color = Color.Red;
-    }
-    else
-    {
-        healthBar.Color = Color.Green;
-    }
-}
 
         private Image pelaajakuva1 = LoadImage("playerkuva.png");
         private Image pelaajakuva2 = LoadImage("playerkuva2.png");
@@ -150,6 +137,8 @@ private void UpdateHealthBarColor(ProgressBar healthBar, double progressRatio)
             PhoneBackButton.Listen(ConfirmExit, "Lopeta peli");
         }
 
+
+
         private void Liikuta(PlatformCharacter hahmo, double nopeus)
         {
             hahmo.Walk(nopeus);
@@ -164,6 +153,55 @@ private void UpdateHealthBarColor(ProgressBar healthBar, double progressRatio)
         {
             hahmo.Velocity = new Vector(750, 750);
         }
-    }
 
+
+/*private MultiSelectWindow pausevalikko;
+
+private void Pausetus()
+{
+    if (IsPaused)
+    {
+        Remove(pausevalikko);
+    }
+    else
+    {
+        pausevalikko = new MultiSelectWindow("Pause", "Aloita alusta", "Lopeta");
+        pausevalikko.Closed += (handler) => Pausetus();
+        pausevalikko.AddItemHandler(0, AloitaAlusta);
+        pausevalikko.AddItemHandler(1, Exit);
+        Add(pausevalikko);
+    }
+    Pause();
+}
+
+private void InitializePause()
+{
+    Keyboard.Listen(Key.Escape, ButtonState.Pressed, Pausetus, "Pysäyttää pelin");
+}
+
+private void Pausetus()
+{
+    if (IsPaused)
+    {
+        Remove(pausevalikko);
+    }
+    else
+    {
+        Add(pausevalikko);
+    }
+    Pause();
+}*/
+
+
+
+    void AloitaAlusta()
+{
+    ClearAll();
+    InitializeHealthBars(); 
+    LuoKentta();
+    LisaaHitbox(pelaaja1, pelaaja2);
+    LisaaNappaimet();
+}
+
+    }
 }
