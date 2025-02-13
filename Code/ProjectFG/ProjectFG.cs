@@ -21,11 +21,12 @@ namespace ProjectFG
     private ProgressBar healthBar2;
 
 
-public void menu()
+    public override void Begin()
     {
+    SetWindowSize(1920, 1200, true);    
     string[] vaihtoehdot = { "Aloita peli", "Lopeta" };
     MultiSelectWindow alkuvalikko = new MultiSelectWindow("MENU", vaihtoehdot);
-        alkuvalikko.AddItemHandler(0, Begin);
+        alkuvalikko.AddItemHandler(0, Alotus);
         alkuvalikko.AddItemHandler(1, Exit);
         Add(alkuvalikko);
     }
@@ -54,13 +55,10 @@ public void menu()
 
 
     
-public override void Begin()
+public void Alotus()
 {
     Gravity = new Vector(0, -1000);
-    SetWindowSize(1920, 1200, true);
-    menu();
-    InitializeHealthBars();
-    Exit();
+    InitializeHealthBars(); 
     LuoKentta();
     LisaaHitbox(pelaaja1, pelaaja2);
     LisaaNappaimet();
