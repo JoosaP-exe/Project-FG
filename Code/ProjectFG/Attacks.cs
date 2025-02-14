@@ -37,14 +37,14 @@ public partial class ProjectFG
         if (lyonti.Position == pelaaja1.Position)
         {
             player1Health -= 10;
-            healthBar1.Width = player1Health;
+            helaBar1.Width = player1Health;
             Remove(lyonti);
             
         }
         else if (lyonti.Position == pelaaja2.Position)
         {
             player2Health -= 10;
-            healthBar2.Width = player2Health;
+            helaBar2.Width = player2Health;
             Remove(lyonti);
         }
         }

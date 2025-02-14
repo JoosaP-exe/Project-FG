@@ -17,8 +17,8 @@ namespace ProjectFG
     /// </summary>
     public partial class ProjectFG : PhysicsGame
     {
-    private ProgressBar healthBar1;
-    private ProgressBar healthBar2;
+    private ProgressBar helaBar1;
+    private ProgressBar helaBar2;
 
 
     public override void Begin()
@@ -42,24 +42,24 @@ namespace ProjectFG
 
 
 
-    private void InitializeHealthBars()
+    private void Helapaarit()
 {
-    healthBar1 = new ProgressBar(250, 20);
-    healthBar1.X = Screen.Left + 120;
-    healthBar1.Y = Screen.Top - 50;
-    healthBar1.Color = Color.Green;
-    healthBar1.BorderColor = Color.Black;
-    healthBar1.Width = 250;
-    Add(healthBar1);
+    helaBar1 = new ProgressBar(250, 20);
+    helaBar1.X = Screen.Left + 120;
+    helaBar1.Y = Screen.Top - 50;
+    helaBar1.Color = Color.Green;
+    helaBar1.BorderColor = Color.Black;
+    helaBar1.Width = 250;
+    Add(helaBar1);
 
 
-    healthBar2 = new ProgressBar(250, 20);
-    healthBar2.X = Screen.Right - 120;
-    healthBar2.Y = Screen.Top - 50;
-    healthBar2.Color = Color.Green;
-    healthBar2.BorderColor = Color.Black;
-    healthBar2.Width = 250;
-    Add(healthBar2);
+    helaBar2 = new ProgressBar(250, 20);
+    helaBar2.X = Screen.Right - 120;
+    helaBar2.Y = Screen.Top - 50;
+    helaBar2.Color = Color.Green;
+    helaBar2.BorderColor = Color.Black;
+    helaBar2.Width = 250;
+    Add(helaBar2);
 }
 
 
@@ -69,7 +69,7 @@ namespace ProjectFG
 public void Alotus()
 {
     Gravity = new Vector(0, -1000);
-    InitializeHealthBars(); 
+    Helapaarit(); 
     LuoKentta();
     LisaaHitbox(pelaaja1, pelaaja2);
     LisaaNappaimet();
@@ -114,7 +114,6 @@ public void Alotus()
         private void LisaaNappaimet()
         {
             Keyboard.Listen(Key.F1, ButtonState.Pressed, ShowControlHelp, "Näytä ohjeet");
-            Keyboard.Listen(Key.Escape, ButtonState.Pressed, ConfirmExit, "Lopeta peli");
 
             Keyboard.Listen(Key.A, ButtonState.Down, Liikuta, "Liikkuu vasemmalle", pelaaja1, -NOPEUS);
             Keyboard.Listen(Key.D, ButtonState.Down, Liikuta, "Liikkuu vasemmalle", pelaaja1, NOPEUS);
@@ -128,7 +127,6 @@ public void Alotus()
             Keyboard.Listen(Key.Up, ButtonState.Pressed, Hyppaa, "Pelaaja hyppää", pelaaja2, HYPPYNOPEUS);
             Keyboard.Listen(Key.Down, ButtonState.Pressed, Hyppaa, "Pelaaja ALAS!", pelaaja2, -HYPPYNOPEUS);
             
-            ControllerOne.Listen(Button.Back, ButtonState.Pressed, Exit, "Poistu pelistä");
 
             ControllerOne.Listen(Button.DPadLeft, ButtonState.Down, Liikuta, "Pelaaja liikkuu vasemmalle", pelaaja1, -NOPEUS);
             ControllerOne.Listen(Button.DPadRight, ButtonState.Down, Liikuta, "Pelaaja liikkuu oikealle", pelaaja1, NOPEUS);
@@ -197,7 +195,7 @@ private void Pausetus()
     void AloitaAlusta()
 {
     ClearAll();
-    InitializeHealthBars(); 
+    Helapaarit(); 
     LuoKentta();
     LisaaHitbox(pelaaja1, pelaaja2);
     LisaaNappaimet();
