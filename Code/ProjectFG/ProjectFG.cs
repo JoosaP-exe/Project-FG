@@ -26,19 +26,13 @@ namespace ProjectFG
         Image menukuva = LoadImage("taustakuva.png");
         Level.Background.Image = menukuva;
         SetWindowSize(1920, 1200, true);    
-        string[] vaihtoehdot = { "Aloita peli", "Crediitit", "Lopeta" };
+        string[] vaihtoehdot = { "Aloita peli", "Lopeta" };
         MultiSelectWindow alkuvalikko = new MultiSelectWindow("MENU", vaihtoehdot);
         alkuvalikko.AddItemHandler(0, Alotus);
-///        alkuvalikko.AddItemHandler(2, Crediitit);
         alkuvalikko.AddItemHandler(1, Exit);
         Add(alkuvalikko);
     }
 
-
-
-/* public static void Crediitit()
-{
-}*/
 
 
 
@@ -127,6 +121,8 @@ public void Alotus()
             Keyboard.Listen(Key.Up, ButtonState.Pressed, Hyppaa, "Pelaaja hyppää", pelaaja2, HYPPYNOPEUS);
             Keyboard.Listen(Key.Down, ButtonState.Pressed, Hyppaa, "Pelaaja ALAS!", pelaaja2, -HYPPYNOPEUS);
             
+            Keyboard.Listen(Key.Escape, ButtonState.Pressed, Pausetus, "Pysäyttää pelin");
+
 
             ControllerOne.Listen(Button.DPadLeft, ButtonState.Down, Liikuta, "Pelaaja liikkuu vasemmalle", pelaaja1, -NOPEUS);
             ControllerOne.Listen(Button.DPadRight, ButtonState.Down, Liikuta, "Pelaaja liikkuu oikealle", pelaaja1, NOPEUS);
@@ -153,9 +149,52 @@ public void Alotus()
         }
 
 
-/*private MultiSelectWindow pausevalikko;
+private MultiSelectWindow pausevalikko;
 
 private void Pausetus()
+{
+    if (IsPaused)
+    {
+        Remove(pausevalikko);
+        pausevalikko = null; // Nollataan valikko, kun se poistetaan
+        Pause(); // Jatketaan peliä
+    }
+    else
+    {
+        if (pausevalikko == null) 
+        {
+            pausevalikko = new MultiSelectWindow("Pause", "Aloita alusta", "Lopeta");
+            pausevalikko.Closed += (handler) => SuljeValikko(); 
+            pausevalikko.AddItemHandler(0, AloitaAlusta); 
+            pausevalikko.AddItemHandler(1, Exit); 
+        }
+        Add(pausevalikko);
+        Pause();
+    }
+}
+
+private void SuljeValikko()
+{
+    if (IsPaused)
+    {
+        Pause(); 
+    }
+    Remove(pausevalikko);
+    pausevalikko = null; 
+}
+
+private void JatkaPelia()
+{
+    if (IsPaused)
+    {
+        Pause(); 
+    }
+    Remove(pausevalikko); 
+    pausevalikko = null; 
+}
+
+
+private void pauseeminen()
 {
     if (IsPaused)
     {
@@ -163,42 +202,26 @@ private void Pausetus()
     }
     else
     {
-        pausevalikko = new MultiSelectWindow("Pause", "Aloita alusta", "Lopeta");
-        pausevalikko.Closed += (handler) => Pausetus();
-        pausevalikko.AddItemHandler(0, AloitaAlusta);
-        pausevalikko.AddItemHandler(1, Exit);
         Add(pausevalikko);
     }
     Pause();
 }
 
-private void InitializePause()
+
+
+void AloitaAlusta()
 {
-    Keyboard.Listen(Key.Escape, ButtonState.Pressed, Pausetus, "Pysäyttää pelin");
-}
-
-private void Pausetus()
-{
-    if (IsPaused)
-    {
-        Remove(pausevalikko);
-    }
-    else
-    {
-        Add(pausevalikko);
-    }
-    Pause();
-}*/
-
-
-
-    void AloitaAlusta()
-{
-    ClearAll();
+    ClearAll(); 
     Helapaarit(); 
     LuoKentta();
     LisaaHitbox(pelaaja1, pelaaja2);
     LisaaNappaimet();
+
+    Camera.Position = new Vector(0, 0);
+    Camera.ZoomFactor = 2;
+    Camera.StayInLevel = false;
+
+    MasterVolume = 0.5;
 }
 
     }
