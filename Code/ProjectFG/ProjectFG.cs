@@ -24,8 +24,8 @@ namespace ProjectFG
         Image menukuva = LoadImage("main-menu.png");
         Level.Background.Image = menukuva;
         SetWindowSize(1920, 1200, true);    
-        string[] vaihtoehdot = { "Aloita peli", "Lopeta" };
-        MultiSelectWindow alkuvalikko = new MultiSelectWindow("MENU", vaihtoehdot);
+        string[] vaihtoehdot = { "PELAA", "POISTU" };
+        MultiSelectWindow alkuvalikko = new MultiSelectWindow("PÄÄVALIKKO", vaihtoehdot);
         alkuvalikko.AddItemHandler(0, Alotus);
         alkuvalikko.AddItemHandler(1, Exit);
         Add(alkuvalikko);
