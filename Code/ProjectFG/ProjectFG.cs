@@ -18,11 +18,10 @@ namespace ProjectFG
     public partial class ProjectFG : PhysicsGame
     {
 
-
-
+    private Image taustakuva = LoadImage("main-menu.png");
     public override void Begin()
     {
-        Image menukuva = LoadImage("taustakuva.png");
+        Image menukuva = LoadImage("main-menu.png");
         Level.Background.Image = menukuva;
         SetWindowSize(1920, 1200, true);    
         string[] vaihtoehdot = { "Aloita peli", "Lopeta" };
@@ -57,7 +56,6 @@ public void Alotus()
 
         private Image pelaajakuva1 = LoadImage("playerkuva.png");
         private Image pelaajakuva2 = LoadImage("playerkuva2.png");
-        private Image taustakuva = LoadImage("taustakuva.png");
         private SoundEffect maaliAani = LoadSoundEffect("maali.wav");
 
 
