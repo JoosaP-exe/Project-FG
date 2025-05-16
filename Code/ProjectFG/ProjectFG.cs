@@ -32,26 +32,21 @@ namespace ProjectFG
     }
 
 
+        public void Alotus()
+        {
+            Gravity = new Vector(0, -1000);
+            hpbar();
+            LuoKentta();
+            LisaaHitbox(pelaaja1, pelaaja2);
+            LisaaNappaimet();
+            /// LocationListener(hitbox1, pelaaja1);
 
+            Camera.Position = new Vector(0, 0);
+            Camera.ZoomFactor = 2;
+            Camera.StayInLevel = false;
 
-
-    
-public void Alotus()
-{
-    Gravity = new Vector(0, -1000);
-    hpbar(); 
-    LuoKentta();
-    LisaaHitbox(pelaaja1, pelaaja2);
-    LisaaNappaimet();
-    /// LocationListener(hitbox1, pelaaja1);
-
-    Camera.Position = new Vector(0, 0);
-    Camera.ZoomFactor = 2;
-    Camera.StayInLevel = false;
-
-    MasterVolume = 0.5;
-}
-
+            MasterVolume = 0.5;
+        }
 
 
         private Image pelaajakuva1 = LoadImage("playerkuva.png");
@@ -70,14 +65,14 @@ public void Alotus()
             Level.Background.Image = taustakuva;
         }
 
+
         private void LisaaTaso(Vector paikka, double leveys, double korkeus)
         {
-            PhysicsObject taso = PhysicsObject.CreateStaticObject(leveys, korkeus+10);
+            PhysicsObject taso = PhysicsObject.CreateStaticObject(leveys, korkeus + 10);
             taso.Position = paikka;
             taso.Color = Color.Green;
             Add(taso);
         }
-        
 
 
         private void LisaaNappaimet()
@@ -90,7 +85,7 @@ public void Alotus()
             Keyboard.Listen(Key.Z, ButtonState.Pressed, Boostaa, "Pelaaja BOOST!!", pelaaja1, HYPPYNOPEUS);
             Keyboard.Listen(Key.F, ButtonState.Pressed, Attacks, "Pelaaja lyö", pelaaja1);
 
-            
+
             Keyboard.Listen(Key.Left, ButtonState.Down, Liikuta, "Liikkuu vasemmalle", pelaaja2, -NOPEUS);
             Keyboard.Listen(Key.Right, ButtonState.Down, Liikuta, "Liikkuu vasemmalle", pelaaja2, NOPEUS);
             Keyboard.Listen(Key.Up, ButtonState.Pressed, Hyppaa, "Pelaaja hyppää", pelaaja2, HYPPYNOPEUS);
@@ -108,16 +103,17 @@ public void Alotus()
         }
 
 
-
         private void Liikuta(PlatformCharacter hahmo, double nopeus)
         {
             hahmo.Walk(nopeus);
         }
 
+
         private void Hyppaa(PlatformCharacter hahmo, double nopeus)
         {
             hahmo.Jump(nopeus);
         }
+
 
         private void Boostaa(PlatformCharacter hahmo, double nopeus)
         {
@@ -125,80 +121,83 @@ public void Alotus()
         }
 
 
-private MultiSelectWindow pausevalikko;
+        private MultiSelectWindow pausevalikko;
 
-private void Pausetus()
-{
-    if (IsPaused)
-    {
-        Remove(pausevalikko);
-        pausevalikko = null; // Nollataan valikko, kun se poistetaan
-        Pause(); // Jatketaan peliä
-    }
-    else
-    {
-        if (pausevalikko == null) 
+
+        private void Pausetus()
         {
-            pausevalikko = new MultiSelectWindow("Pause", "Aloita alusta", "Lopeta");
-            pausevalikko.Closed += (handler) => SuljeValikko(); 
-            pausevalikko.AddItemHandler(0, AloitaAlusta); 
-            pausevalikko.AddItemHandler(1, Exit); 
+            if (IsPaused)
+            {
+                Remove(pausevalikko);
+                pausevalikko = null; // Nollataan valikko, kun se poistetaan
+                Pause(); // Jatketaan peliä
+            }
+            else
+            {
+                if (pausevalikko == null)
+                {
+                    pausevalikko = new MultiSelectWindow("Pause", "Aloita alusta", "Lopeta");
+                    pausevalikko.Closed += (handler) => SuljeValikko();
+                    pausevalikko.AddItemHandler(0, AloitaAlusta);
+                    pausevalikko.AddItemHandler(1, Exit);
+                }
+                Add(pausevalikko);
+                Pause();
+            }
         }
-        Add(pausevalikko);
-        Pause();
-    }
-}
-
-private void SuljeValikko()
-{
-    if (IsPaused)
-    {
-        Pause(); 
-    }
-    Remove(pausevalikko);
-    pausevalikko = null; 
-}
-
-private void JatkaPelia()
-{
-    if (IsPaused)
-    {
-        Pause(); 
-    }
-    Remove(pausevalikko); 
-    pausevalikko = null; 
-}
 
 
-private void pauseeminen()
-{
-    if (IsPaused)
-    {
-        Remove(pausevalikko);
-    }
-    else
-    {
-        Add(pausevalikko);
-    }
-    Pause();
-}
+        private void SuljeValikko()
+        {
+            if (IsPaused)
+            {
+                Pause();
+            }
+            Remove(pausevalikko);
+            pausevalikko = null;
+        }
 
 
+        private void JatkaPelia()
+        {
+            if (IsPaused)
+            {
+                Pause();
+            }
+            Remove(pausevalikko);
+            pausevalikko = null;
+        }
 
-void AloitaAlusta()
-{
-    ClearAll(); 
-    hpbar(); 
-    LuoKentta();
-    LisaaHitbox(pelaaja1, pelaaja2);
-    LisaaNappaimet();
 
-    Camera.Position = new Vector(0, 0);
-    Camera.ZoomFactor = 2;
-    Camera.StayInLevel = false;
+        private void pauseeminen()
+        {
+            if (IsPaused)
+            {
+                Remove(pausevalikko);
+            }
+            else
+            {
+                Add(pausevalikko);
+            }
+            Pause();
+        }
 
-    MasterVolume = 0.5;
-}
+
+        void AloitaAlusta()
+        {
+            ClearAll();
+            hpbar();
+            LuoKentta();
+            LisaaHitbox(pelaaja1, pelaaja2);
+            LisaaNappaimet();
+
+            Camera.Position = new Vector(0, 0);
+            Camera.ZoomFactor = 2;
+            Camera.StayInLevel = false;
+
+            MasterVolume = 0.5;
+        }
+
 
     }
 }
