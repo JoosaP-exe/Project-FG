@@ -17,8 +17,7 @@ namespace ProjectFG
     /// </summary>
     public partial class ProjectFG : PhysicsGame
     {
-    private ProgressBar helaBar1;
-    private ProgressBar helaBar2;
+
 
 
     public override void Begin()
@@ -36,34 +35,12 @@ namespace ProjectFG
 
 
 
-    private void Helapaarit()
-{
-    helaBar1 = new ProgressBar(250, 20);
-    helaBar1.X = Screen.Left + 120;
-    helaBar1.Y = Screen.Top - 50;
-    helaBar1.Color = Color.Green;
-    helaBar1.BorderColor = Color.Black;
-    helaBar1.Width = 250;
-    Add(helaBar1);
-
-
-    helaBar2 = new ProgressBar(250, 20);
-    helaBar2.X = Screen.Right - 120;
-    helaBar2.Y = Screen.Top - 50;
-    helaBar2.Color = Color.Green;
-    helaBar2.BorderColor = Color.Black;
-    helaBar2.Width = 250;
-    Add(helaBar2);
-}
-
-
-
 
     
 public void Alotus()
 {
     Gravity = new Vector(0, -1000);
-    Helapaarit(); 
+    hpbar(); 
     LuoKentta();
     LisaaHitbox(pelaaja1, pelaaja2);
     LisaaNappaimet();
@@ -212,7 +189,7 @@ private void pauseeminen()
 void AloitaAlusta()
 {
     ClearAll(); 
-    Helapaarit(); 
+    hpbar(); 
     LuoKentta();
     LisaaHitbox(pelaaja1, pelaaja2);
     LisaaNappaimet();
