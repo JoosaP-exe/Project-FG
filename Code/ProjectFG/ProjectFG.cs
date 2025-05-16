@@ -95,6 +95,7 @@ public void Alotus()
             Keyboard.Listen(Key.Right, ButtonState.Down, Liikuta, "Liikkuu vasemmalle", pelaaja2, NOPEUS);
             Keyboard.Listen(Key.Up, ButtonState.Pressed, Hyppaa, "Pelaaja hyppää", pelaaja2, HYPPYNOPEUS);
             Keyboard.Listen(Key.Down, ButtonState.Pressed, Hyppaa, "Pelaaja ALAS!", pelaaja2, -HYPPYNOPEUS);
+            Keyboard.Listen(Key.RightControl, ButtonState.Pressed, Attacks, "Pelaaja lyö", pelaaja2);
             
             Keyboard.Listen(Key.Escape, ButtonState.Pressed, Pausetus, "Pysäyttää pelin");
 
