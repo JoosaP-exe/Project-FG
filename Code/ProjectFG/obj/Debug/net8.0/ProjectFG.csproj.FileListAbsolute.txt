@@ -235,7 +235,6 @@ K:\GitKraken\Project-FG\Code\ProjectFG\bin\Debug\net8.0\Content\kentta1.txt
 K:\GitKraken\Project-FG\Code\ProjectFG\bin\Debug\net8.0\Content\maali.wav
 K:\GitKraken\Project-FG\Code\ProjectFG\bin\Debug\net8.0\Content\playerkuva.png
 K:\GitKraken\Project-FG\Code\ProjectFG\bin\Debug\net8.0\Content\playerkuva2.png
-K:\GitKraken\Project-FG\Code\ProjectFG\bin\Debug\net8.0\Content\taustakuva.png
 K:\GitKraken\Project-FG\Code\ProjectFG\bin\Debug\net8.0\ProjectFG.deps.json
 K:\GitKraken\Project-FG\Code\ProjectFG\bin\Debug\net8.0\ProjectFG.runtimeconfig.json
 K:\GitKraken\Project-FG\Code\ProjectFG\bin\Debug\net8.0\ProjectFG.dll

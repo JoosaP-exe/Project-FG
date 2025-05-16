@@ -35,12 +35,11 @@ namespace ProjectFG
         public void Alotus()
         {
             Gravity = new Vector(0, -1000);
-            hpbar();
             LuoKentta();
-            LisaaHitbox(pelaaja1, pelaaja2);
             LisaaNappaimet();
+            hpbar(ListenedPosition1, ListenedPosition2, player1Health, player2Health);
+            AddPositionListener(pelaaja1, pelaaja2);
             /// LocationListener(hitbox1, pelaaja1);
-
             Camera.Position = new Vector(0, 0);
             Camera.ZoomFactor = 2;
             Camera.StayInLevel = false;
@@ -186,10 +185,12 @@ namespace ProjectFG
         void AloitaAlusta()
         {
             ClearAll();
-            hpbar();
             LuoKentta();
-            LisaaHitbox(pelaaja1, pelaaja2);
+            player1Health = MAX_HEALTH;
+            player2Health = MAX_HEALTH;
+            hpbar(ListenedPosition1, ListenedPosition2, player1Health, player2Health);
             LisaaNappaimet();
+            AddPositionListener(pelaaja1, pelaaja2);
 
             Camera.Position = new Vector(0, 0);
             Camera.ZoomFactor = 2;
@@ -197,7 +198,6 @@ namespace ProjectFG
 
             MasterVolume = 0.5;
         }
-
 
     }
 }

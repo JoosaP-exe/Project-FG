@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.ComponentModel.Design;
+using System.Diagnostics.Tracing;
 using System.Net.Mail;
 using System.Xml;
 using FarseerPhysics.Collision;
@@ -25,6 +26,16 @@ public partial class ProjectFG
     private PhysicsObject lyonti;
     private ProgressBar hp1;
     private ProgressBar hp2;
+    private PhysicsObject p1ragdoll;
+    private PhysicsObject p2ragdoll;
+    private Vector ListenedPosition1;
+    private Vector ListenedPosition2;
+
+    ///  private Image voitto1;
+    /// private Image voitto2;
+    /// private GameObject GameVoitto1;
+    /// private GameObject GameVoitto2;
+
 
 
     private void LisaaPelaaja(Vector paikka, double leveys, double korkeus)
@@ -42,61 +53,35 @@ public partial class ProjectFG
     {
         pelaaja2 = new PlatformCharacter(21, 32);
         pelaaja2.Position = paikka;
-        pelaaja2.Mass = 0.0;
-        pelaaja2.IgnoresGravity = true;
+        pelaaja2.Mass = 4.0;
         pelaaja2.Image = pelaajakuva2;
         pelaaja2.CollisionIgnoreGroup = 2;
         Add(pelaaja2);
     }
 
-
-    private void hpbar()
+    private void hpbar(Vector ListenedPosition1, Vector ListenedPosition2, double player1Health, double player2Health)
     {
-        hp1 = new ProgressBar(250, 20);
-        hp1.X = Screen.Left + 120;
-        hp1.Y = Screen.Top - 50;
+        hp1 = new ProgressBar(player1Health, 5);
+        hp1.Position = ListenedPosition1;
         hp1.Color = Color.Green;
         hp1.BorderColor = Color.Black;
-        hp1.Width = player1Health;
         Add(hp1);
 
-
-        hp2 = new ProgressBar(250, 20);
-        hp2.X = Screen.Right - 120;
-        hp2.Y = Screen.Top - 50;
+        hp2 = new ProgressBar(player2Health, 5);
+        hp2.Position = ListenedPosition2;
         hp2.Color = Color.Green;
         hp2.BorderColor = Color.Black;
-        hp2.Width = player2Health;
         Add(hp2);
     }
 
 
-    private void LisaaHitbox(PlatformCharacter pelaaja1, PlatformCharacter pelaaja2)
-    {
-        PhysicsObject hitbox1 = PhysicsObject.CreateStaticObject(21, 32);
-        AxleJoint HBL1 = new AxleJoint(hitbox1, pelaaja1);
-        hitbox1.Position = pelaaja1.Position;
-        hitbox1.Color = Color.Red;
-        hitbox1.IsVisible = false;
-        hitbox1.IgnoresGravity = true;
-        hitbox1.CollisionIgnoreGroup = 1;
-        HBL1.Softness = 0.0;
-        pelaaja1.Add(hitbox1);
-
-        PhysicsObject hitbox2 = PhysicsObject.CreateStaticObject(21, 32);
-        AxleJoint HBL2 = new AxleJoint(hitbox2, pelaaja2);
-        hitbox2.Position = pelaaja2.Position;
-        hitbox2.Color = Color.Red;
-        hitbox2.IgnoresGravity = true;
-        hitbox2.IsVisible = false;
-        hitbox2.CollisionIgnoreGroup = 2;
-        HBL2.Softness = 0.0;
-        pelaaja2.Add(hitbox2);
-    }
-
 
     private void Attacks(PlatformCharacter hahmo)
     {
+        if (hahmo.IsDestroyed)
+        {
+            return;
+        }
         lyonti = PhysicsObject.CreateStaticObject(5, 2);
         lyonti.Position = hahmo.Position;
         if (hahmo.FacingDirection == Direction.Right)
@@ -131,7 +116,8 @@ public partial class ProjectFG
             player1Health -= 10; // Vähennetään pelaaja 1:n terveyttä
             Console.WriteLine("Pelaaja 1:n terveys: " + player1Health);
             CheckHealth(player1Health, player2Health); // Tarkistaa pelaajien terveyden
-            pelaaja1.Velocity = new Vector(-100, -100);
+            pelaaja1.Velocity = new Vector(0, 1000); // Asetetaan pelaaja 1:n nopeus
+            pelaaja1.Velocity = new Vector(-1000, 0);
             hp1.Width = player2Health; // Nollaa pelaaja 1:n nopeuden
         }
         else if (kohde == pelaaja2)
@@ -140,7 +126,8 @@ public partial class ProjectFG
             player2Health -= 10; // Vähennetään pelaaja 2:n terveyttä
             Console.WriteLine("Pelaaja 2:n terveys: " + player2Health);
             CheckHealth(player1Health, player2Health); // Tarkistaa pelaajien terveyden
-            pelaaja2.Velocity = new Vector(-100, -100);
+            pelaaja2.Velocity = new Vector(0, 1000);
+            pelaaja2.Velocity = new Vector(-1000, 0);
             hp2.Width = player2Health;
         }
     }
@@ -152,15 +139,51 @@ public partial class ProjectFG
         {
             pelaaja1.Destroy(); // Tuhoaa pelaaja 1:n
             Console.WriteLine("Pelaaja 2 voitti!");
+            p1ragdoll = new PhysicsObject(21, 32);
+            p1ragdoll.Mass = 0.0;
+            p1ragdoll.Image = pelaajakuva1;
+            p1ragdoll.CollisionIgnoreGroup = 1;
+            p1ragdoll.Position = pelaaja1.Position;
+            p1ragdoll.Velocity = new Vector(300, 200);
+            p1ragdoll.IgnoresGravity = true;
+            Add(p1ragdoll);
+            /// Image voitto1 = LoadImage("voitto.png");
+
         }
         else if (player2Health <= 0)
         {
             pelaaja2.Destroy(); // Tuhoaa pelaaja 2:n
             Console.WriteLine("Pelaaja 1 voitti!");
+            p2ragdoll = new PhysicsObject(21, 32);
+            p2ragdoll.Mass = 0.0;
+            p2ragdoll.Image = pelaajakuva2;
+            p2ragdoll.CollisionIgnoreGroup = 2;
+            p2ragdoll.Position = pelaaja2.Position;
+            p2ragdoll.Velocity = new Vector(-300, 200);
+            p2ragdoll.IgnoresGravity = true;
+            Add(p2ragdoll);
+            /// GameVoitto2 = new GameObject(100, 100);
+            /// GameVoitto2.SetImage("voitto.png");
+            /// GameVoitto2.Position = new Vector(0, 0);
+            /// Add(GameVoitto2);
         }
         return;
     }
-        
+
+private void AddPositionListener(PlatformCharacter pelaaja1, PlatformCharacter pelaaja2)
+{
+    // Create a timer to listen for position changes
+    Timer positionTimer = new Timer();
+    positionTimer.Interval = 0.01; // seconds
+    positionTimer.Timeout += () =>
+    {
+        // Do something with pelaaja.Position
+        ListenedPosition1 = pelaaja1.Position;
+        ListenedPosition2 = pelaaja2.Position;
+        // You can add your own logic here
+    };
+    positionTimer.Start();
+}
         
 }
 
