@@ -19,16 +19,17 @@ namespace ProjectFG
     {
 
     private Image taustakuva = LoadImage("main-menu.png");
-    public override void Begin()
-    {
-        Image menukuva = LoadImage("main-menu.png");
-        Level.Background.Image = menukuva;
-        SetWindowSize(1920, 1200, true);    
-        string[] vaihtoehdot = { "PELAA", "POISTU" };
-        MultiSelectWindow alkuvalikko = new MultiSelectWindow("PÄÄVALIKKO", vaihtoehdot);
-        alkuvalikko.AddItemHandler(0, Alotus);
-        alkuvalikko.AddItemHandler(1, Exit);
-        Add(alkuvalikko);
+        public override void Begin()
+        {
+            Image menukuva = LoadImage("main-menu.png");
+            Level.Background.Image = menukuva;
+            SetWindowSize(1920, 1200, true);
+            string[] vaihtoehdot = { "PELAA", "POISTU" };
+            MultiSelectWindow alkuvalikko = new MultiSelectWindow("PÄÄVALIKKO", vaihtoehdot);
+            alkuvalikko.AddItemHandler(0, Alotus);
+            alkuvalikko.AddItemHandler(1, Exit);
+            Add(alkuvalikko);
+            MediaPlayer.Play("mainmenu");
     }
 
 
@@ -43,6 +44,7 @@ namespace ProjectFG
             Camera.Position = new Vector(0, 0);
             Camera.ZoomFactor = 2;
             Camera.StayInLevel = false;
+            MediaPlayer.Play("combat");
 
             MasterVolume = 0.5;
         }
@@ -135,7 +137,7 @@ namespace ProjectFG
             {
                 if (pausevalikko == null)
                 {
-                    pausevalikko = new MultiSelectWindow("Pause", "Aloita alusta", "Lopeta");
+                    pausevalikko = new MultiSelectWindow("TAUKO", "ALOITA ALUSTA", "POISTU");
                     pausevalikko.Closed += (handler) => SuljeValikko();
                     pausevalikko.AddItemHandler(0, AloitaAlusta);
                     pausevalikko.AddItemHandler(1, Exit);
