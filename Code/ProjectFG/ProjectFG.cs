@@ -83,7 +83,6 @@ namespace ProjectFG
             Keyboard.Listen(Key.A, ButtonState.Down, Liikuta, "Liikkuu vasemmalle", pelaaja1, -NOPEUS);
             Keyboard.Listen(Key.D, ButtonState.Down, Liikuta, "Liikkuu vasemmalle", pelaaja1, NOPEUS);
             Keyboard.Listen(Key.W, ButtonState.Pressed, Hyppaa, "Pelaaja hyppää", pelaaja1, HYPPYNOPEUS);
-            Keyboard.Listen(Key.Z, ButtonState.Pressed, Boostaa, "Pelaaja BOOST!!", pelaaja1, HYPPYNOPEUS);
             Keyboard.Listen(Key.F, ButtonState.Pressed, Attacks, "Pelaaja lyö", pelaaja1);
 
 
