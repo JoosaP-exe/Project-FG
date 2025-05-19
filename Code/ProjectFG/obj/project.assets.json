@@ -1546,11 +1546,16 @@
     ]
   },
   "packageFolders": {
+<<<<<<< HEAD
     "C:\\Users\\gr301868\\.nuget\\packages\\": {}
+=======
+    "C:\\Users\\gr301855\\.nuget\\packages\\": {}
+>>>>>>> origin/main
   },
   "project": {
     "version": "1.0.0",
     "restore": {
+<<<<<<< HEAD
       "projectUniqueName": "D:\\ProjectFG\\ProjectFGToimiPliisPaska\\Project-FG\\Code\\ProjectFG\\ProjectFG.csproj",
       "projectName": "ProjectFG",
       "projectPath": "D:\\ProjectFG\\ProjectFGToimiPliisPaska\\Project-FG\\Code\\ProjectFG\\ProjectFG.csproj",
@@ -1559,6 +1564,16 @@
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "C:\\Users\\gr301868\\AppData\\Roaming\\NuGet\\NuGet.Config"
+=======
+      "projectUniqueName": "C:\\Users\\gr301855\\OneDrive - Jyväskylän koulutuskuntayhtymä Gradia\\Työpöytä\\gitkraken\\kikkeeliiieieas\\Code\\ProjectFG\\ProjectFG.csproj",
+      "projectName": "ProjectFG",
+      "projectPath": "C:\\Users\\gr301855\\OneDrive - Jyväskylän koulutuskuntayhtymä Gradia\\Työpöytä\\gitkraken\\kikkeeliiieieas\\Code\\ProjectFG\\ProjectFG.csproj",
+      "packagesPath": "C:\\Users\\gr301855\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\gr301855\\OneDrive - Jyväskylän koulutuskuntayhtymä Gradia\\Työpöytä\\gitkraken\\kikkeeliiieieas\\Code\\ProjectFG\\obj\\",
+      "projectStyle": "PackageReference",
+      "configFilePaths": [
+        "C:\\Users\\gr301855\\AppData\\Roaming\\NuGet\\NuGet.Config"
+>>>>>>> origin/main
       ],
       "originalTargetFrameworks": [
         "net8.0"
@@ -1581,8 +1596,12 @@
         "enableAudit": "true",
         "auditLevel": "low",
         "auditMode": "direct"
+<<<<<<< HEAD
       },
       "SdkAnalysisLevel": "9.0.100"
+=======
+      }
+>>>>>>> origin/main
     },
     "frameworks": {
       "net8.0": {
@@ -1613,7 +1632,11 @@
             "privateAssets": "all"
           }
         },
+<<<<<<< HEAD
         "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.105/PortableRuntimeIdentifierGraph.json"
+=======
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.408/PortableRuntimeIdentifierGraph.json"
+>>>>>>> origin/main
       }
     }
   }

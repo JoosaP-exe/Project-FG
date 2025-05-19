@@ -18,7 +18,7 @@ public partial class ProjectFG
     private const double NOPEUS = 200;
     private const double HYPPYNOPEUS = 500;
     private const int RUUDUN_KOKO = 40;
-    private const double MAX_HEALTH = 100;
+    private const double MAX_HEALTH = 200;
     private double player1Health = MAX_HEALTH;
     private double player2Health = MAX_HEALTH;
     private PlatformCharacter pelaaja1;
@@ -30,6 +30,8 @@ public partial class ProjectFG
     private PhysicsObject p2ragdoll;
     private Vector ListenedPosition1;
     private Vector ListenedPosition2;
+    private Label pelaaja1HP;
+    private Label pelaaja2HP;
 
     ///  private Image voitto1;
     /// private Image voitto2;
@@ -59,20 +61,36 @@ public partial class ProjectFG
         Add(pelaaja2);
     }
 
-    private void hpbar(Vector ListenedPosition1, Vector ListenedPosition2, double player1Health, double player2Health)
+    private void hpbar()
     {
-        hp1 = new ProgressBar(player1Health, 5);
-        hp1.Position = ListenedPosition1;
+        if (hp1 != null) Remove(hp1);
+        if (hp2 != null) Remove(hp2);
+
+        hp1 = new ProgressBar(player1Health, 20);
+        hp1.Position = new Vector(Screen.Left + 120, Screen.Top - 30);
         hp1.Color = Color.Green;
         hp1.BorderColor = Color.Black;
         Add(hp1);
 
-        hp2 = new ProgressBar(player2Health, 5);
-        hp2.Position = ListenedPosition2;
+        hp2 = new ProgressBar(player2Health, 20);
+        hp2.Position = new Vector(Screen.Right - 120, Screen.Top - 30);
         hp2.Color = Color.Green;
         hp2.BorderColor = Color.Black;
         Add(hp2);
-    }
+        
+        pelaaja1HP = new Label("Pelaaja 1:");
+        pelaaja1HP.Position = new Vector(Screen.Left + 275, Screen.Top - 30);
+        pelaaja1HP.TextColor = Color.White;
+        pelaaja1HP.Color = Color.Transparent;
+        Add(pelaaja1HP);
+
+        pelaaja2HP = new Label("Pelaaja 2:");
+        pelaaja2HP.Position = new Vector(Screen.Right - 275, Screen.Top - 30);
+        pelaaja2HP.TextColor = Color.White;
+        pelaaja2HP.Color = Color.Transparent;
+        Add(pelaaja2HP);
+        }
+
 
 
 
