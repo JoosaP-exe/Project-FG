@@ -23,7 +23,6 @@ namespace ProjectFG
         {
             Image menukuva = LoadImage("main-menu.png");
             Level.Background.Image = menukuva;
-            SetWindowSize(1920, 1200, true);
             string[] vaihtoehdot = { "PELAA", "POISTU" };
             MultiSelectWindow alkuvalikko = new MultiSelectWindow("PÄÄVALIKKO", vaihtoehdot);
             alkuvalikko.AddItemHandler(0, Alotus);
@@ -39,10 +38,12 @@ namespace ProjectFG
             LuoKentta();
             LisaaNappaimet();
             hpbar();
+            Timer(MaxAika);
             /// LocationListener(hitbox1, pelaaja1);
             Camera.Position = new Vector(0, 0);
             Camera.ZoomFactor = 2;
             Camera.StayInLevel = false;
+            MediaPlayer.Volume = 0.3;
             MediaPlayer.Play("combat");
 
             MasterVolume = 0.5;
@@ -51,7 +52,9 @@ namespace ProjectFG
 
         private Image pelaajakuva1 = LoadImage("playerkuva.png");
         private Image pelaajakuva2 = LoadImage("playerkuva2.png");
-        private SoundEffect maaliAani = LoadSoundEffect("maali.wav");
+        private Image voitto1 = LoadImage("pleijer1voitto.png");
+        private Image voitto2 = LoadImage("pleijer2voitto.png");
+        private Image aikaloppui = LoadImage("aikaloppui.png");
 
 
         private void LuoKentta()
@@ -191,6 +194,7 @@ namespace ProjectFG
             hpbar();
             LisaaNappaimet();
             Update(Time);
+            Timer(MaxAika);
 
             Camera.Position = new Vector(0, 0);
             Camera.ZoomFactor = 2;

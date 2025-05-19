@@ -30,6 +30,9 @@ public partial class ProjectFG
     private PhysicsObject p2ragdoll;
     private Label pelaaja1HP;
     private Label pelaaja2HP;
+    private double MaxAika = 12; // Max time in seconds
+    private GameObject GameVoitto1;
+    private GameObject GameVoitto2;
 
     ///  private Image voitto1;
     /// private Image voitto2;
@@ -88,6 +91,42 @@ public partial class ProjectFG
         pelaaja2HP.Color = Color.Transparent;
         Add(pelaaja2HP);
     }
+
+    // Add this field to your class
+private Label TimerDisplay;
+
+private void Timer(double maxAika)
+{
+    Timer timer = new Timer();
+    TimerDisplay = new Label(maxAika.ToString("0"));
+    TimerDisplay.Position = new Vector(0, Screen.Top - 30); // Centered at the top
+    TimerDisplay.TextColor = Color.White;
+    TimerDisplay.Color = Color.Transparent;
+    Add(TimerDisplay);
+
+    timer.Interval = 1; // 1 second interval
+    timer.Timeout += () =>
+    {
+        maxAika -= 1;
+        TimerDisplay.Text = maxAika.ToString("0"); // Update the timer display
+
+        if (maxAika <= 0)
+        {
+            timer.Stop();
+            {
+                Console.WriteLine("Tasapeli!");
+                GameObject tasapeli = new GameObject(1536, 1024);
+                tasapeli.Image = aikaloppui;
+                tasapeli.Position = new Vector(0, 60);
+                tasapeli.Size = new Vector(384, 256);
+                Add(tasapeli);
+                pelaaja1.Destroy(); // Destroy player 1
+                pelaaja2.Destroy(); // Destroy player 2
+            }
+        }
+    };
+    timer.Start();
+}
 
 
 
@@ -159,9 +198,13 @@ public partial class ProjectFG
             p1ragdoll.Velocity = new Vector(300, 200);
             p1ragdoll.IgnoresGravity = true;
             Add(p1ragdoll);
-            /// Image voitto1 = LoadImage("voitto.png");
-
+            GameVoitto2 = new GameObject(1536, 1024);
+            GameVoitto2.Image = voitto2;
+            GameVoitto2.Position = new Vector(0, 60);
+            GameVoitto2.Size = new Vector(384, 256);
+            Add(GameVoitto2);
         }
+
         else if (player2Health <= 0)
         {
             pelaaja2.Destroy(); // Tuhoaa pelaaja 2:n
@@ -174,10 +217,11 @@ public partial class ProjectFG
             p2ragdoll.Velocity = new Vector(-300, 200);
             p2ragdoll.IgnoresGravity = true;
             Add(p2ragdoll);
-            /// GameVoitto2 = new GameObject(100, 100);
-            /// GameVoitto2.SetImage("voitto.png");
-            /// GameVoitto2.Position = new Vector(0, 0);
-            /// Add(GameVoitto2);
+            GameVoitto1 = new GameObject(1536, 1024);
+            GameVoitto1.Image = voitto1;
+            GameVoitto1.Position = new Vector(0, 60);
+            GameVoitto1.Size = new Vector(384, 256);
+            Add(GameVoitto1);
         }
         return;
     }
