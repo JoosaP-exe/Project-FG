@@ -1,6 +1,7 @@
 {
   "format": 1,
   "restore": {
+<<<<<<< HEAD
     "D:\\GitKraken\\Project-FG\\Code\\ProjectFG\\ProjectFG.csproj": {}
   },
   "projects": {
@@ -18,6 +19,25 @@
         ],
         "configFilePaths": [
           "C:\\Users\\Joosa P\\AppData\\Roaming\\NuGet\\NuGet.Config",
+=======
+    "K:\\GitKraken\\Project-FG\\Code\\ProjectFG\\ProjectFG.csproj": {}
+  },
+  "projects": {
+    "K:\\GitKraken\\Project-FG\\Code\\ProjectFG\\ProjectFG.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "K:\\GitKraken\\Project-FG\\Code\\ProjectFG\\ProjectFG.csproj",
+        "projectName": "ProjectFG",
+        "projectPath": "K:\\GitKraken\\Project-FG\\Code\\ProjectFG\\ProjectFG.csproj",
+        "packagesPath": "C:\\Users\\gr301857\\.nuget\\packages\\",
+        "outputPath": "K:\\GitKraken\\Project-FG\\Code\\ProjectFG\\obj\\",
+        "projectStyle": "PackageReference",
+        "fallbackFolders": [
+          "K:\\Visual Studio\\Shared\\NuGetPackages"
+        ],
+        "configFilePaths": [
+          "C:\\Users\\gr301857\\AppData\\Roaming\\NuGet\\NuGet.Config",
+>>>>>>> origin/main
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
@@ -43,7 +63,11 @@
         "restoreAuditProperties": {
           "enableAudit": "true",
           "auditLevel": "low",
+<<<<<<< HEAD
           "auditMode": "direct"
+=======
+          "auditMode": "all"
+>>>>>>> origin/main
         },
         "SdkAnalysisLevel": "9.0.100"
       },
@@ -94,7 +118,11 @@
               "privateAssets": "all"
             }
           },
+<<<<<<< HEAD
           "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.102/PortableRuntimeIdentifierGraph.json"
+=======
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.100/PortableRuntimeIdentifierGraph.json"
+>>>>>>> origin/main
         }
       }
     }

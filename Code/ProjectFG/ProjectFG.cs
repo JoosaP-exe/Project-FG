@@ -39,7 +39,6 @@ namespace ProjectFG
             LuoKentta();
             LisaaNappaimet();
             hpbar();
-            AddPositionListener(pelaaja1, pelaaja2);
             /// LocationListener(hitbox1, pelaaja1);
             Camera.Position = new Vector(0, 0);
             Camera.ZoomFactor = 2;
@@ -191,7 +190,7 @@ namespace ProjectFG
             player2Health = MAX_HEALTH;
             hpbar();
             LisaaNappaimet();
-            AddPositionListener(pelaaja1, pelaaja2);
+            Update(Time);
 
             Camera.Position = new Vector(0, 0);
             Camera.ZoomFactor = 2;
