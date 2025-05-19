@@ -58,6 +58,7 @@ namespace ProjectFG
         private SoundEffect gunshot = LoadSoundEffect("peakgun.wav");
         private Image[] bampuminen = LoadImages("1ampuuframe1.png", "1ampuuframe2.png", "1ampuuframe3.png", "1ampuuframe4.png");
         private Image[] rampuminen = LoadImages("2ampuuframe1.png", "2ampuuframe2.png", "2ampuuframe3.png", "2ampuuframe4.png");
+        private Image[] baveleminen = LoadImages("kavelee1.png", "kavelee2.png", "kavelee3.png", "kavelee4.png", "kavelee5.png", "kavelee6.png");
 
 
         private void LuoKentta()
@@ -111,18 +112,13 @@ namespace ProjectFG
         private void Liikuta(PlatformCharacter hahmo, double nopeus)
         {
             hahmo.Walk(nopeus);
+            pelaaja1.AnimWalk = new Animation(baveleminen);
         }
 
 
         private void Hyppaa(PlatformCharacter hahmo, double nopeus)
         {
             hahmo.Jump(nopeus);
-        }
-
-
-        private void Boostaa(PlatformCharacter hahmo, double nopeus)
-        {
-            hahmo.Velocity = new Vector(750, 750);
         }
 
 
