@@ -28,8 +28,6 @@ public partial class ProjectFG
     private ProgressBar hp2;
     private PhysicsObject p1ragdoll;
     private PhysicsObject p2ragdoll;
-    private Vector ListenedPosition1;
-    private Vector ListenedPosition2;
     private Label pelaaja1HP;
     private Label pelaaja2HP;
 
@@ -77,7 +75,7 @@ public partial class ProjectFG
         hp2.Color = Color.Green;
         hp2.BorderColor = Color.Black;
         Add(hp2);
-        
+
         pelaaja1HP = new Label("Pelaaja 1:");
         pelaaja1HP.Position = new Vector(Screen.Left + 275, Screen.Top - 30);
         pelaaja1HP.TextColor = Color.White;
@@ -89,7 +87,7 @@ public partial class ProjectFG
         pelaaja2HP.TextColor = Color.White;
         pelaaja2HP.Color = Color.Transparent;
         Add(pelaaja2HP);
-        }
+    }
 
 
 
@@ -131,21 +129,17 @@ public partial class ProjectFG
         if (kohde == pelaaja1)
         {
             lyonti.Destroy(); // Tuhoaa lyöntiobjektin
-            player1Health -= 10; // Vähennetään pelaaja 1:n terveyttä
+            player1Health -= 20; // Vähennetään pelaaja 1:n terveyttä
             Console.WriteLine("Pelaaja 1:n terveys: " + player1Health);
             CheckHealth(player1Health, player2Health); // Tarkistaa pelaajien terveyden
-            pelaaja1.Velocity = new Vector(0, 1000); // Asetetaan pelaaja 1:n nopeus
-            pelaaja1.Velocity = new Vector(-1000, 0);
-            hp1.Width = player2Health; // Nollaa pelaaja 1:n nopeuden
+            hp1.Width = player1Health; // Nollaa pelaaja 1:n nopeuden
         }
         else if (kohde == pelaaja2)
         {
             lyonti.Destroy();
-            player2Health -= 10; // Vähennetään pelaaja 2:n terveyttä
+            player2Health -= 20; // Vähennetään pelaaja 2:n terveyttä
             Console.WriteLine("Pelaaja 2:n terveys: " + player2Health);
             CheckHealth(player1Health, player2Health); // Tarkistaa pelaajien terveyden
-            pelaaja2.Velocity = new Vector(0, 1000);
-            pelaaja2.Velocity = new Vector(-1000, 0);
             hp2.Width = player2Health;
         }
     }
@@ -158,7 +152,7 @@ public partial class ProjectFG
             pelaaja1.Destroy(); // Tuhoaa pelaaja 1:n
             Console.WriteLine("Pelaaja 2 voitti!");
             p1ragdoll = new PhysicsObject(21, 32);
-            p1ragdoll.Mass = 0.0;
+            p1ragdoll.Mass = 0.4925;
             p1ragdoll.Image = pelaajakuva1;
             p1ragdoll.CollisionIgnoreGroup = 1;
             p1ragdoll.Position = pelaaja1.Position;
@@ -173,7 +167,7 @@ public partial class ProjectFG
             pelaaja2.Destroy(); // Tuhoaa pelaaja 2:n
             Console.WriteLine("Pelaaja 1 voitti!");
             p2ragdoll = new PhysicsObject(21, 32);
-            p2ragdoll.Mass = 0.0;
+            p2ragdoll.Mass = 0.4925;
             p2ragdoll.Image = pelaajakuva2;
             p2ragdoll.CollisionIgnoreGroup = 2;
             p2ragdoll.Position = pelaaja2.Position;
@@ -188,20 +182,6 @@ public partial class ProjectFG
         return;
     }
 
-private void AddPositionListener(PlatformCharacter pelaaja1, PlatformCharacter pelaaja2)
-{
-    // Create a timer to listen for position changes
-    Timer positionTimer = new Timer();
-    positionTimer.Interval = 0.01; // seconds
-    positionTimer.Timeout += () =>
-    {
-        // Do something with pelaaja.Position
-        ListenedPosition1 = pelaaja1.Position;
-        ListenedPosition2 = pelaaja2.Position;
-        // You can add your own logic here
-    };
-    positionTimer.Start();
-}
-        
-}
+
+    }
 
