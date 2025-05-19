@@ -177,7 +177,6 @@ C:\Users\gr301855\OneDrive - Jyväskylän koulutuskuntayhtymä Gradia\Työpöyt�
 C:\Users\gr301855\OneDrive - Jyväskylän koulutuskuntayhtymä Gradia\Työpöytä\gitkraken\kikkeeliiieieas\Code\ProjectFG\bin\Debug\net8.0\Content\maali.wav
 C:\Users\gr301855\OneDrive - Jyväskylän koulutuskuntayhtymä Gradia\Työpöytä\gitkraken\kikkeeliiieieas\Code\ProjectFG\bin\Debug\net8.0\Content\playerkuva.png
 C:\Users\gr301855\OneDrive - Jyväskylän koulutuskuntayhtymä Gradia\Työpöytä\gitkraken\kikkeeliiieieas\Code\ProjectFG\bin\Debug\net8.0\Content\playerkuva2.png
-C:\Users\gr301855\OneDrive - Jyväskylän koulutuskuntayhtymä Gradia\Työpöytä\gitkraken\kikkeeliiieieas\Code\ProjectFG\bin\Debug\net8.0\Content\taustakuva.png
 C:\Users\gr301855\OneDrive - Jyväskylän koulutuskuntayhtymä Gradia\Työpöytä\gitkraken\kikkeeliiieieas\Code\ProjectFG\bin\Debug\net8.0\ProjectFG.deps.json
 C:\Users\gr301855\OneDrive - Jyväskylän koulutuskuntayhtymä Gradia\Työpöytä\gitkraken\kikkeeliiieieas\Code\ProjectFG\bin\Debug\net8.0\ProjectFG.runtimeconfig.json
 C:\Users\gr301855\OneDrive - Jyväskylän koulutuskuntayhtymä Gradia\Työpöytä\gitkraken\kikkeeliiieieas\Code\ProjectFG\bin\Debug\net8.0\ProjectFG.dll

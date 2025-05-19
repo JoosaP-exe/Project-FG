@@ -37,7 +37,7 @@ namespace ProjectFG
             Gravity = new Vector(0, -1000);
             LuoKentta();
             LisaaNappaimet();
-            hpbar(ListenedPosition1, ListenedPosition2, player1Health, player2Health);
+            hpbar();
             AddPositionListener(pelaaja1, pelaaja2);
             /// LocationListener(hitbox1, pelaaja1);
             Camera.Position = new Vector(0, 0);
@@ -128,8 +128,8 @@ namespace ProjectFG
             if (IsPaused)
             {
                 Remove(pausevalikko);
-                pausevalikko = null; // Nollataan valikko, kun se poistetaan
-                Pause(); // Jatketaan peliä
+                pausevalikko = null;
+                Pause();
             }
             else
             {
@@ -188,7 +188,7 @@ namespace ProjectFG
             LuoKentta();
             player1Health = MAX_HEALTH;
             player2Health = MAX_HEALTH;
-            hpbar(ListenedPosition1, ListenedPosition2, player1Health, player2Health);
+            hpbar();
             LisaaNappaimet();
             AddPositionListener(pelaaja1, pelaaja2);
 
