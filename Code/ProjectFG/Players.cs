@@ -4,6 +4,7 @@ using System.ComponentModel;
 using System.ComponentModel.Design;
 using System.Diagnostics.Tracing;
 using System.Net.Mail;
+using System.Threading;
 using System.Xml;
 using FarseerPhysics.Collision;
 using Jypeli;
@@ -30,7 +31,7 @@ public partial class ProjectFG
     private PhysicsObject p2ragdoll;
     private Label pelaaja1HP;
     private Label pelaaja2HP;
-    private double MaxAika = 12; // Max time in seconds
+    private double MaxAika = 120; // Max time in seconds
     private GameObject GameVoitto1;
     private GameObject GameVoitto2;
 
@@ -97,7 +98,7 @@ private Label TimerDisplay;
 
 private void Timer(double maxAika)
 {
-    Timer timer = new Timer();
+    Jypeli.Timer timer = new Jypeli.Timer();
     TimerDisplay = new Label(maxAika.ToString("0"));
     TimerDisplay.Position = new Vector(0, Screen.Top - 30); // Centered at the top
     TimerDisplay.TextColor = Color.White;
@@ -109,6 +110,11 @@ private void Timer(double maxAika)
     {
         maxAika -= 1;
         TimerDisplay.Text = maxAika.ToString("0"); // Update the timer display
+        if (pelaaja1.IsDestroyed || pelaaja2.IsDestroyed)
+        {
+            timer.Pause();
+            return;
+        }
 
         if (maxAika <= 0)
         {
@@ -128,17 +134,14 @@ private void Timer(double maxAika)
     timer.Start();
 }
 
-
-
-
     private void Attacks(PlatformCharacter hahmo)
     {
+        lyonti = new PhysicsObject(2, 1);
+        lyonti.Position = hahmo.Position;
         if (hahmo.IsDestroyed)
         {
             return;
         }
-        lyonti = PhysicsObject.CreateStaticObject(5, 2);
-        lyonti.Position = hahmo.Position;
         if (hahmo.FacingDirection == Direction.Right)
         {
             lyonti.Velocity = new Vector(500, 0);
@@ -149,9 +152,35 @@ private void Timer(double maxAika)
         }
         lyonti.Color = Color.Red;
         lyonti.IgnoresGravity = true;
-        lyonti.Mass = 100;
+        lyonti.Mass = 0;
         lyonti.CollisionIgnoreGroup = hahmo.CollisionIgnoreGroup;
-        Add(lyonti);
+        if (hahmo == pelaaja1)
+        {
+            pelaaja1.Animation = new Animation(bampuminen);
+            pelaaja1.Animation.FPS = 8;
+            if (pelaaja1.FacingDirection == Direction.Left)
+            {
+                Animation mbampuminen = Animation.Mirror(pelaaja1.Animation);
+            }
+            pelaaja1.Size = new Vector(32, 32);
+            pelaaja1.Animation.Start(1);
+            Add(lyonti);
+            gunshot.Play();
+        }
+        else
+        {
+            pelaaja2.Animation = new Animation(rampuminen);
+            pelaaja2.Animation.FPS = 8;
+            if (pelaaja2.FacingDirection == Direction.Left)
+            {
+                Animation mrampuminen = Animation.Mirror(pelaaja2.Animation);
+            }
+            pelaaja2.Size = new Vector(32, 32);
+            pelaaja2.Animation.Start(1);
+            Add(lyonti);
+            gunshot.Play();
+
+        }
         if (hahmo == pelaaja1)
         {
             AddCollisionHandler(lyonti, pelaaja2, PelaajatTormaavatHandler);
@@ -203,6 +232,8 @@ private void Timer(double maxAika)
             GameVoitto2.Position = new Vector(0, 60);
             GameVoitto2.Size = new Vector(384, 256);
             Add(GameVoitto2);
+            pelaaja1.Destroy(); // Destroy player 1
+            pelaaja2.Destroy(); // Destroy player 2
         }
 
         else if (player2Health <= 0)
@@ -222,6 +253,8 @@ private void Timer(double maxAika)
             GameVoitto1.Position = new Vector(0, 60);
             GameVoitto1.Size = new Vector(384, 256);
             Add(GameVoitto1);
+            pelaaja1.Destroy(); // Destroy player 1
+            pelaaja2.Destroy(); // Destroy player 2
         }
         return;
     }

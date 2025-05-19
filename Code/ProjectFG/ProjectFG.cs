@@ -55,6 +55,9 @@ namespace ProjectFG
         private Image voitto1 = LoadImage("pleijer1voitto.png");
         private Image voitto2 = LoadImage("pleijer2voitto.png");
         private Image aikaloppui = LoadImage("aikaloppui.png");
+        private SoundEffect gunshot = LoadSoundEffect("peakgun.wav");
+        private Image[] bampuminen = LoadImages("1ampuuframe1.png", "1ampuuframe2.png", "1ampuuframe3.png", "1ampuuframe4.png");
+        private Image[] rampuminen = LoadImages("2ampuuframe1.png", "2ampuuframe2.png", "2ampuuframe3.png", "2ampuuframe4.png");
 
 
         private void LuoKentta()
