@@ -1546,44 +1546,24 @@
     ]
   },
   "packageFolders": {
-<<<<<<< HEAD
     "C:\\Users\\gr301868\\.nuget\\packages\\": {}
-=======
-    "C:\\Users\\gr301857\\.nuget\\packages\\": {},
-    "K:\\Visual Studio\\Shared\\NuGetPackages": {}
->>>>>>> origin/main
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-<<<<<<< HEAD
       "projectUniqueName": "D:\\ProjectFG\\ProjectFGToimiPliisPaska\\Project-FG\\Code\\ProjectFG\\ProjectFG.csproj",
-=======
-      "projectUniqueName": "K:\\GitKraken\\Project-FG\\Code\\ProjectFG\\ProjectFG.csproj",
->>>>>>> origin/main
       "projectName": "ProjectFG",
-      "projectPath": "K:\\GitKraken\\Project-FG\\Code\\ProjectFG\\ProjectFG.csproj",
-      "packagesPath": "C:\\Users\\gr301857\\.nuget\\packages\\",
-      "outputPath": "K:\\GitKraken\\Project-FG\\Code\\ProjectFG\\obj\\",
+      "projectPath": "D:\\ProjectFG\\ProjectFGToimiPliisPaska\\Project-FG\\Code\\ProjectFG\\ProjectFG.csproj",
+      "packagesPath": "C:\\Users\\gr301868\\.nuget\\packages\\",
+      "outputPath": "D:\\ProjectFG\\ProjectFGToimiPliisPaska\\Project-FG\\Code\\ProjectFG\\obj\\",
       "projectStyle": "PackageReference",
-      "fallbackFolders": [
-        "K:\\Visual Studio\\Shared\\NuGetPackages"
-      ],
       "configFilePaths": [
-<<<<<<< HEAD
         "C:\\Users\\gr301868\\AppData\\Roaming\\NuGet\\NuGet.Config"
-=======
-        "C:\\Users\\gr301857\\AppData\\Roaming\\NuGet\\NuGet.Config",
-        "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
-        "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
->>>>>>> origin/main
       ],
       "originalTargetFrameworks": [
         "net8.0"
       ],
       "sources": {
-        "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
-        "C:\\Program Files\\dotnet\\library-packs": {},
         "https://api.nuget.org/v3/index.json": {}
       },
       "frameworks": {
@@ -1600,11 +1580,7 @@
       "restoreAuditProperties": {
         "enableAudit": "true",
         "auditLevel": "low",
-<<<<<<< HEAD
         "auditMode": "direct"
-=======
-        "auditMode": "all"
->>>>>>> origin/main
       },
       "SdkAnalysisLevel": "9.0.100"
     },
@@ -1637,11 +1613,7 @@
             "privateAssets": "all"
           }
         },
-<<<<<<< HEAD
         "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.106/PortableRuntimeIdentifierGraph.json"
-=======
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.100/PortableRuntimeIdentifierGraph.json"
->>>>>>> origin/main
       }
     }
   },
@@ -1650,77 +1622,7 @@
       "code": "Undefined",
       "level": "Warning",
       "warningLevel": 1,
-      "message": "Problem reading the cache file K:\\GitKraken\\Project-FG\\Code\\ProjectFG\\obj\\project.nuget.cache : Invalid property identifier character: <. Path 'version', line 3, position 0."
-    },
-    {
-      "code": "NU1903",
-      "level": "Warning",
-      "warningLevel": 1,
-      "message": "Package 'SixLabors.ImageSharp' 2.1.0 has a known high severity vulnerability, https://github.com/advisories/GHSA-2cmq-823j-5qj8",
-      "libraryId": "SixLabors.ImageSharp",
-      "targetGraphs": [
-        "net8.0"
-      ]
-    },
-    {
-      "code": "NU1902",
-      "level": "Warning",
-      "warningLevel": 1,
-      "message": "Package 'SixLabors.ImageSharp' 2.1.0 has a known moderate severity vulnerability, https://github.com/advisories/GHSA-5x7m-6737-26cr",
-      "libraryId": "SixLabors.ImageSharp",
-      "targetGraphs": [
-        "net8.0"
-      ]
-    },
-    {
-      "code": "NU1903",
-      "level": "Warning",
-      "warningLevel": 1,
-      "message": "Package 'SixLabors.ImageSharp' 2.1.0 has a known high severity vulnerability, https://github.com/advisories/GHSA-63p8-c4ww-9cg7",
-      "libraryId": "SixLabors.ImageSharp",
-      "targetGraphs": [
-        "net8.0"
-      ]
-    },
-    {
-      "code": "NU1903",
-      "level": "Warning",
-      "warningLevel": 1,
-      "message": "Package 'SixLabors.ImageSharp' 2.1.0 has a known high severity vulnerability, https://github.com/advisories/GHSA-65x7-c272-7g7r",
-      "libraryId": "SixLabors.ImageSharp",
-      "targetGraphs": [
-        "net8.0"
-      ]
-    },
-    {
-      "code": "NU1902",
-      "level": "Warning",
-      "warningLevel": 1,
-      "message": "Package 'SixLabors.ImageSharp' 2.1.0 has a known moderate severity vulnerability, https://github.com/advisories/GHSA-g85r-6x2q-45w7",
-      "libraryId": "SixLabors.ImageSharp",
-      "targetGraphs": [
-        "net8.0"
-      ]
-    },
-    {
-      "code": "NU1902",
-      "level": "Warning",
-      "warningLevel": 1,
-      "message": "Package 'SixLabors.ImageSharp' 2.1.0 has a known moderate severity vulnerability, https://github.com/advisories/GHSA-qxrv-gp6x-rc23",
-      "libraryId": "SixLabors.ImageSharp",
-      "targetGraphs": [
-        "net8.0"
-      ]
-    },
-    {
-      "code": "NU1903",
-      "level": "Warning",
-      "warningLevel": 1,
-      "message": "Package 'System.Text.Json' 7.0.0 has a known high severity vulnerability, https://github.com/advisories/GHSA-hh2w-p6rv-4g7w",
-      "libraryId": "System.Text.Json",
-      "targetGraphs": [
-        "net8.0"
-      ]
+      "message": "Problem reading the cache file D:\\ProjectFG\\ProjectFGToimiPliisPaska\\Project-FG\\Code\\ProjectFG\\obj\\project.nuget.cache : Invalid property identifier character: <. Path 'version', line 3, position 0."
     }
   ]
 }
