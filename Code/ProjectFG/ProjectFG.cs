@@ -19,6 +19,9 @@ namespace ProjectFG
     {
 
     private Image taustakuva = LoadImage("main-menu.png");
+        /// <summary>
+        /// Luodaan alkuvalikko, jossa voidaan valita pelin aloitus tai poistuminen. Laittaa myös taustan ja musat soimaan.
+        /// </summary>
         public override void Begin()
         {
             Image menukuva = LoadImage("main-menu.png");
@@ -29,9 +32,11 @@ namespace ProjectFG
             alkuvalikko.AddItemHandler(1, Exit);
             Add(alkuvalikko);
             MediaPlayer.Play("mainmenu");
-    }
+        }
 
-
+        /// <summary>
+        /// Pelin alkaessa säätää kameran, luo kentän, lisää taistelumusat ja näppaimet.
+        /// </summary>
         public void Alotus()
         {
             Gravity = new Vector(0, -1000);
@@ -60,7 +65,9 @@ namespace ProjectFG
         private Image[] rampuminen = LoadImages("2ampuuframe1.png", "2ampuuframe2.png", "2ampuuframe3.png", "2ampuuframe4.png");
         private Image[] baveleminen = LoadImages("kavelee1.png", "kavelee2.png", "kavelee3.png", "kavelee4.png", "kavelee5.png", "kavelee6.png");
 
-
+        /// <summary>
+        /// Värkkää kentta1.txt tiedoston mukaan kentän, jossa on pelaajat ja taso, jota voi muokata jos jaksaa.
+        /// </summary>
         private void LuoKentta()
         {
             TileMap kentta = TileMap.FromLevelAsset("kentta1.txt");
@@ -72,16 +79,20 @@ namespace ProjectFG
             Level.Background.Image = taustakuva;
         }
 
-
+        /// <summary>
+        /// Tekee tasosta physicsobjektin ja muuttaa sen värin.
+        /// </summary>
         private void LisaaTaso(Vector paikka, double leveys, double korkeus)
         {
             PhysicsObject taso = PhysicsObject.CreateStaticObject(leveys, korkeus + 10);
             taso.Position = paikka;
-            taso.Color = Color.Green;
+            taso.Color = Color.DarkBlue;
             Add(taso);
         }
 
-
+        /// <summary>
+        /// Hökälöi kaikki pelaajien näppäimet ja hommat.
+        /// </summary>
         private void LisaaNappaimet()
         {
             Keyboard.Listen(Key.F1, ButtonState.Pressed, ShowControlHelp, "Näytä ohjeet");
@@ -108,14 +119,18 @@ namespace ProjectFG
             PhoneBackButton.Listen(ConfirmExit, "Lopeta peli");
         }
 
-
+        /// <summary>
+        /// Tekee pelaajan kävelyn animaatiot.
+        /// </summary>
         private void Liikuta(PlatformCharacter hahmo, double nopeus)
         {
             hahmo.Walk(nopeus);
             pelaaja1.AnimWalk = new Animation(baveleminen);
         }
 
-
+        /// <summary>
+        /// Saa pelaajan hyppäämään.
+        /// </summary>
         private void Hyppaa(PlatformCharacter hahmo, double nopeus)
         {
             hahmo.Jump(nopeus);
@@ -124,7 +139,9 @@ namespace ProjectFG
 
         private MultiSelectWindow pausevalikko;
 
-
+        /// <summary>
+        /// Hökälöi pausevalikon esciä painettaessa, jossa on vaihtoehdot jatkaa peliä tai aloittaa alusta.
+        /// </summary>
         private void Pausetus()
         {
             if (IsPaused)
@@ -147,7 +164,9 @@ namespace ProjectFG
             }
         }
 
-
+        /// <summary>
+        /// Sulkee pausevalikon.
+        /// </summary>
         private void SuljeValikko()
         {
             if (IsPaused)
@@ -158,7 +177,9 @@ namespace ProjectFG
             pausevalikko = null;
         }
 
-
+        /// <summary>
+        /// Jatkaa peliä kun painetaan esciä.
+        /// </summary>
         private void JatkaPelia()
         {
             if (IsPaused)
@@ -169,7 +190,9 @@ namespace ProjectFG
             pausevalikko = null;
         }
 
-
+        /// <summary>
+        /// Tsiigaa onko pausevalikko auki vai ei.
+        /// </summary>
         private void pauseeminen()
         {
             if (IsPaused)
@@ -183,7 +206,9 @@ namespace ProjectFG
             Pause();
         }
 
-
+        /// <summary>
+        /// Tekee kaikki hommat kun peli alkaa alusta.
+        /// </summary>
         void AloitaAlusta()
         {
             ClearAll();
