@@ -18,7 +18,7 @@ namespace ProjectFG
     public partial class ProjectFG : PhysicsGame
     {
 
-    private Image taustakuva = LoadImage("main-menu.png");
+        private Image taustakuva = LoadImage("main-menu.png");
         public override void Begin()
         {
             Image menukuva = LoadImage("main-menu.png");
@@ -29,12 +29,15 @@ namespace ProjectFG
             alkuvalikko.AddItemHandler(1, Exit);
             Add(alkuvalikko);
             MediaPlayer.Play("mainmenu");
-    }
+        }
+
 
 
         public void Alotus()
         {
             Gravity = new Vector(0, -1000);
+            player1Health = MAX_HEALTH;
+            player2Health = MAX_HEALTH;
             LuoKentta();
             LisaaNappaimet();
             hpbar();
@@ -47,6 +50,8 @@ namespace ProjectFG
             MediaPlayer.Play("combat");
 
             MasterVolume = 0.5;
+            AddCollisionHandler(pelaaja1, "barrier", Barrieri);
+            AddCollisionHandler(pelaaja2, "barrier", Barrieri);
         }
 
 
@@ -67,6 +72,7 @@ namespace ProjectFG
             kentta.SetTileMethod('#', LisaaTaso);
             kentta.SetTileMethod('N', LisaaPelaaja);
             kentta.SetTileMethod('M', LisaaPelaaja2);
+            kentta.SetTileMethod('-', LisaaBarrier);
             kentta.Execute(RUUDUN_KOKO, RUUDUN_KOKO);
 
             Level.Background.Image = taustakuva;
@@ -81,31 +87,33 @@ namespace ProjectFG
             Add(taso);
         }
 
+        private void LisaaBarrier(Vector paikka, double leveys, double korkeus)
+        {
+            PhysicsObject barrier = PhysicsObject.CreateStaticObject(leveys, korkeus);
+            barrier.Position = paikka;
+            barrier.Color = Color.Transparent;
+            barrier.Tag = "barrier";
+            barrier.IgnoresCollisionResponse = true;
+            Add(barrier);
+        }
+
 
         private void LisaaNappaimet()
         {
-            Keyboard.Listen(Key.F1, ButtonState.Pressed, ShowControlHelp, "Näytä ohjeet");
 
             Keyboard.Listen(Key.A, ButtonState.Down, Liikuta, "Liikkuu vasemmalle", pelaaja1, -NOPEUS);
             Keyboard.Listen(Key.D, ButtonState.Down, Liikuta, "Liikkuu vasemmalle", pelaaja1, NOPEUS);
             Keyboard.Listen(Key.W, ButtonState.Pressed, Hyppaa, "Pelaaja hyppää", pelaaja1, HYPPYNOPEUS);
-            Keyboard.Listen(Key.F, ButtonState.Pressed, Attacks, "Pelaaja lyö", pelaaja1);
+            Keyboard.Listen(Key.F, ButtonState.Pressed, Lyominen, "Pelaaja lyö", pelaaja1);
 
 
             Keyboard.Listen(Key.Left, ButtonState.Down, Liikuta, "Liikkuu vasemmalle", pelaaja2, -NOPEUS);
             Keyboard.Listen(Key.Right, ButtonState.Down, Liikuta, "Liikkuu vasemmalle", pelaaja2, NOPEUS);
             Keyboard.Listen(Key.Up, ButtonState.Pressed, Hyppaa, "Pelaaja hyppää", pelaaja2, HYPPYNOPEUS);
             Keyboard.Listen(Key.Down, ButtonState.Pressed, Hyppaa, "Pelaaja ALAS!", pelaaja2, -HYPPYNOPEUS);
-            Keyboard.Listen(Key.RightControl, ButtonState.Pressed, Attacks, "Pelaaja lyö", pelaaja2);
-            
+            Keyboard.Listen(Key.RightControl, ButtonState.Pressed, Lyominen, "Pelaaja lyö", pelaaja2);
+
             Keyboard.Listen(Key.Escape, ButtonState.Pressed, Pausetus, "Pysäyttää pelin");
-
-
-            ControllerOne.Listen(Button.DPadLeft, ButtonState.Down, Liikuta, "Pelaaja liikkuu vasemmalle", pelaaja1, -NOPEUS);
-            ControllerOne.Listen(Button.DPadRight, ButtonState.Down, Liikuta, "Pelaaja liikkuu oikealle", pelaaja1, NOPEUS);
-            ControllerOne.Listen(Button.A, ButtonState.Pressed, Hyppaa, "Pelaaja hyppää", pelaaja1, HYPPYNOPEUS);
-
-            PhoneBackButton.Listen(ConfirmExit, "Lopeta peli");
         }
 
 
@@ -201,6 +209,7 @@ namespace ProjectFG
 
             MasterVolume = 0.5;
         }
+
 
     }
 }

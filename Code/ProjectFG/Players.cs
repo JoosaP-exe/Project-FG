@@ -65,9 +65,6 @@ public partial class ProjectFG
 
     private void hpbar()
     {
-        if (hp1 != null) Remove(hp1);
-        if (hp2 != null) Remove(hp2);
-
         hp1 = new ProgressBar(player1Health, 20);
         hp1.Position = new Vector(Screen.Left + 120, Screen.Top - 30);
         hp1.Color = Color.Green;
@@ -93,48 +90,54 @@ public partial class ProjectFG
         Add(pelaaja2HP);
     }
 
-    // Add this field to your class
-private Label TimerDisplay;
 
-private void Timer(double maxAika)
-{
-    Jypeli.Timer timer = new Jypeli.Timer();
-    TimerDisplay = new Label(maxAika.ToString("0"));
-    TimerDisplay.Position = new Vector(0, Screen.Top - 30); // Centered at the top
-    TimerDisplay.TextColor = Color.White;
-    TimerDisplay.Color = Color.Transparent;
-    Add(TimerDisplay);
+    private Label TimerDisplay;
 
-    timer.Interval = 1; // 1 second interval
-    timer.Timeout += () =>
+    private void Timer(double maxAika)
     {
-        maxAika -= 1;
-        TimerDisplay.Text = maxAika.ToString("0"); // Update the timer display
-        if (pelaaja1.IsDestroyed || pelaaja2.IsDestroyed)
-        {
-            timer.Pause();
-            return;
-        }
+        Jypeli.Timer timer = new Jypeli.Timer();
+        TimerDisplay = new Label(maxAika.ToString("0"));
+        TimerDisplay.Position = new Vector(0, Screen.Top - 30); // Centered at the top
+        TimerDisplay.TextColor = Color.White;
+        TimerDisplay.Color = Color.Transparent;
+        Add(TimerDisplay);
 
-        if (maxAika <= 0)
+        timer.Interval = 1; // 1 second interval
+        timer.Timeout += () =>
         {
-            timer.Stop();
+            maxAika -= 1;
+            TimerDisplay.Text = maxAika.ToString("0"); // Update the timer display
+            if (pelaaja1.IsDestroyed || pelaaja2.IsDestroyed)
             {
-                Console.WriteLine("Tasapeli!");
-                GameObject tasapeli = new GameObject(1536, 1024);
-                tasapeli.Image = aikaloppui;
-                tasapeli.Position = new Vector(0, 60);
-                tasapeli.Size = new Vector(384, 256);
-                Add(tasapeli);
-                pelaaja1.Destroy(); // Destroy player 1
-                pelaaja2.Destroy(); // Destroy player 2
+                timer.Pause();
+                return;
             }
-        }
-    };
-    timer.Start();
-}
 
-    private void Attacks(PlatformCharacter hahmo)
+            if (maxAika <= 0)
+            {
+                timer.Stop();
+                {
+                    Console.WriteLine("Tasapeli!");
+                    GameObject tasapeli = new GameObject(1536, 1024);
+                    tasapeli.Image = aikaloppui;
+                    tasapeli.Position = new Vector(0, 60);
+                    tasapeli.Size = new Vector(384, 256);
+                    Add(tasapeli);
+                    pelaaja1.Destroy(); // Destroy player 1
+                    pelaaja2.Destroy(); // Destroy player 2
+
+                    Jypeli.Timer.SingleShot(5.0, () =>
+                    {
+                        ClearAll();
+                        Begin();
+                    });
+                }
+            }
+        };
+        timer.Start();
+    }
+
+    private void Lyominen(PlatformCharacter hahmo)
     {
         lyonti = new PhysicsObject(2, 1);
         lyonti.Position = hahmo.Position;
@@ -217,7 +220,7 @@ private void Timer(double maxAika)
     {
         if (player1Health <= 0)
         {
-            pelaaja1.Destroy(); // Tuhoaa pelaaja 1:n
+            pelaaja1.Destroy();
             Console.WriteLine("Pelaaja 2 voitti!");
             p1ragdoll = new PhysicsObject(21, 32);
             p1ragdoll.Mass = 0.4925;
@@ -232,13 +235,19 @@ private void Timer(double maxAika)
             GameVoitto2.Position = new Vector(0, 60);
             GameVoitto2.Size = new Vector(384, 256);
             Add(GameVoitto2);
-            pelaaja1.Destroy(); // Destroy player 1
-            pelaaja2.Destroy(); // Destroy player 2
+            pelaaja1.Destroy();
+            pelaaja2.Destroy();
+
+            Jypeli.Timer.SingleShot(5.0, () =>
+            {
+                ClearAll();
+                Begin();
+            });
         }
 
         else if (player2Health <= 0)
         {
-            pelaaja2.Destroy(); // Tuhoaa pelaaja 2:n
+            pelaaja2.Destroy();
             Console.WriteLine("Pelaaja 1 voitti!");
             p2ragdoll = new PhysicsObject(21, 32);
             p2ragdoll.Mass = 0.4925;
@@ -253,12 +262,33 @@ private void Timer(double maxAika)
             GameVoitto1.Position = new Vector(0, 60);
             GameVoitto1.Size = new Vector(384, 256);
             Add(GameVoitto1);
-            pelaaja1.Destroy(); // Destroy player 1
-            pelaaja2.Destroy(); // Destroy player 2
+            pelaaja1.Destroy();
+            pelaaja2.Destroy();
+
+            Jypeli.Timer.SingleShot(5.0, () =>
+            {
+                ClearAll();
+                Begin();
+            });
         }
         return;
     }
 
-
+private void Barrieri(PhysicsObject pelaaja, PhysicsObject barrieri)
+    {
+        if (pelaaja == pelaaja1)
+        {
+            player1Health = 0;
+            hp1.Width = 0;
+            CheckHealth(player1Health, player2Health);
+        }
+        else if (pelaaja == pelaaja2)
+        {
+            player2Health = 0;
+            hp2.Width = 0;
+            CheckHealth(player1Health, player2Health);
+        }
     }
+
+}
 
