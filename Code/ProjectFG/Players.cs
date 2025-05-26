@@ -6,8 +6,6 @@ using Jypeli.Widgets;
 
 namespace ProjectFG;
 
-/// <author>gr301857</author>
-/// <version>15.11.2024</version>
 /// <summary>
 /// Sisältää pelaajiin ja hpeisiin liittyvät jutskat
 /// </summary>
@@ -241,7 +239,7 @@ public partial class ProjectFG
         if (kohde == _pelaaja1)
         {
             lyonti.Destroy();
-            _pelaaja1Hp -= 20;
+            _pelaaja1Hp -= 8;
             Console.WriteLine("Pelaaja 1:n terveys: " + _pelaaja1Hp);
             CheckHealth(_pelaaja1Hp, _pelaaja2Hp);
             _hp1.Width = _pelaaja1Hp;
@@ -249,7 +247,7 @@ public partial class ProjectFG
         else if (kohde == _pelaaja2)
         {
             lyonti.Destroy();
-            _pelaaja2Hp -= 20;
+            _pelaaja2Hp -= 8;
             Console.WriteLine("Pelaaja 2:n terveys: " + _pelaaja2Hp);
             CheckHealth(_pelaaja1Hp, _pelaaja2Hp);
             _hp2.Width = _pelaaja2Hp;

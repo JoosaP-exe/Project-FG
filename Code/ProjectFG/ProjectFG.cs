@@ -10,14 +10,14 @@ using Jypeli.Widgets;
 
 namespace ProjectFG
 {
-    /// <author>gr301857</author>
-    /// <version>15.11.2024</version>
+    /// <author>Toxo22, Joosap, Valkohattu</author>
+    /// <version>26.05.2025</version>
     /// <summary>
     /// Pelin pääluokka, jossa kaikki jossa suurin piirtein kaikki
     /// </summary>
     public partial class ProjectFG : PhysicsGame
     {
-        /// <summary>Taustakuva.</summary>
+        /// <summary>Taustakuva</summary>
         private Image _taustaKuva = LoadImage("main-menu.png");
         /// <summary>Pelaaja 1 kuva</summary>
         private Image _pelaajaKuva1 = LoadImage("playerkuva.png");
@@ -83,9 +83,6 @@ namespace ProjectFG
             MediaPlayer.Play("combat");
 
             MasterVolume = 0.5;
-
-            AddCollisionHandler(_pelaaja1, "barrier", Barrieri);
-            AddCollisionHandler(_pelaaja2, "barrier", Barrieri);
         }
 
 
@@ -102,6 +99,8 @@ namespace ProjectFG
             kentta.Execute(RuudunKoko, RuudunKoko);
 
             Level.Background.Image = _taustaKuva;
+            AddCollisionHandler(_pelaaja1, "barrier", Barrieri);
+            AddCollisionHandler(_pelaaja2, "barrier", Barrieri);
         }
 
 
@@ -254,6 +253,7 @@ namespace ProjectFG
             ClearAll();
             LuoKentta();
 
+            
             _pelaaja1Hp = MaxHp;
             _pelaaja2Hp = MaxHp;
 
