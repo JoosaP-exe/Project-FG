@@ -10,27 +10,39 @@ using Jypeli.Widgets;
 
 namespace ProjectFG
 {
-    /// @author gr301857
-    /// @version 15.11.2024
+    /// <author>gr301857</author>
+    /// <version>15.11.2024</version>
     /// <summary>
-    /// 
+    /// Pelin pääluokka, jossa kaikki jossa suurin piirtein kaikki
     /// </summary>
     public partial class ProjectFG : PhysicsGame
     {
+        /// <summary>Taustakuva.</summary>
         private Image _taustaKuva = LoadImage("main-menu.png");
+        /// <summary>Pelaaja 1 kuva</summary>
         private Image _pelaajaKuva1 = LoadImage("playerkuva.png");
+        /// <summary>Pelaaja 2 kuva</summary>
         private Image _pelaajaKuva2 = LoadImage("playerkuva2.png");
+        /// <summary>Pelaaja 1 voiton kuva</summary>
         private Image _voitto1 = LoadImage("pleijer1voitto.png");
+        /// <summary>Pelaaja 2 voiton kuva</summary>
         private Image _voitto2 = LoadImage("pleijer2voitto.png");
+        /// <summary>Ajan loppumisen kuva</summary>
         private Image _aikaLoppui = LoadImage("aikaloppui.png");
+        /// <summary>Ääniefekti ampumiselle</summary>
         private SoundEffect _gunShot = LoadSoundEffect("peakgun.wav");
+        /// <summary>Pelaaja 1 ampumisanimaatiot</summary>
         private Image[] _bAmpuminen = LoadImages("1ampuuframe1.png", "1ampuuframe2.png", "1ampuuframe3.png", "1ampuuframe4.png");
+        /// <summary>Pelaaja 2 ampumisanimaatiot</summary>
         private Image[] _rAmpuminen = LoadImages("2ampuuframe1.png", "2ampuuframe2.png", "2ampuuframe3.png", "2ampuuframe4.png");
+        /// <summary>Pelaaja 1 kävelyanimaatiot</summary>
         private Image[] _bAveleminen = LoadImages("kavelee1.png", "kavelee2.png", "kavelee3.png", "kavelee4.png", "kavelee5.png", "kavelee6.png");
-
+        /// <summary>Pelin pausemenu</summary>
         private MultiSelectWindow _pauseValikko;
 
-
+        /// <summary>
+        /// Käynnistää koko höskän (pelin)
+        /// </summary>
         public override void Begin()
         {
             Image menuKuva = LoadImage("main-menu.png");
@@ -48,6 +60,9 @@ namespace ProjectFG
         }
 
 
+        /// <summary>
+        /// Aloittaa pelin ja alustaa kaiken
+        /// </summary>
         public void Alotus()
         {
             Gravity = new Vector(0, -1000);
@@ -74,6 +89,9 @@ namespace ProjectFG
         }
 
 
+        /// <summary>
+        /// Luo kentän teksti filun avulla
+        /// </summary>
         private void LuoKentta()
         {
             TileMap kentta = TileMap.FromLevelAsset("kentta1.txt");
@@ -87,6 +105,9 @@ namespace ProjectFG
         }
 
 
+        /// <summary>
+        /// Lisää kentälle tason
+        /// </summary>
         private void LisaaTaso(Vector paikka, double leveys, double korkeus)
         {
             PhysicsObject taso = PhysicsObject.CreateStaticObject(leveys, korkeus + 10);
@@ -96,6 +117,9 @@ namespace ProjectFG
         }
 
 
+        /// <summary>
+        /// Lisää kentälle barrierin, johon osuessa kuolee
+        /// </summary>
         private void LisaaBarrier(Vector paikka, double leveys, double korkeus)
         {
             PhysicsObject barrier = PhysicsObject.CreateStaticObject(leveys, korkeus);
@@ -107,24 +131,30 @@ namespace ProjectFG
         }
 
 
+        /// <summary>
+        /// Lisäätään näppäimet pelaajille
+        /// </summary>
         private void LisaaNappaimet()
         {
             Keyboard.Listen(Key.A, ButtonState.Down, Liikuta, "Liikkuu vasemmalle", _pelaaja1, -Nopeus);
             Keyboard.Listen(Key.D, ButtonState.Down, Liikuta, "Liikkuu oikealle", _pelaaja1, Nopeus);
             Keyboard.Listen(Key.W, ButtonState.Pressed, Hyppaa, "Pelaaja hyppää", _pelaaja1, HyppyNopeus);
-            Keyboard.Listen(Key.F, ButtonState.Pressed, Lyominen, "Pelaaja lyö", _pelaaja1);
+            Keyboard.Listen(Key.F, ButtonState.Pressed, Ampuminen, "Pelaaja lyö", _pelaaja1);
 
 
             Keyboard.Listen(Key.Left, ButtonState.Down, Liikuta, "Liikkuu vasemmalle", _pelaaja2, -Nopeus);
             Keyboard.Listen(Key.Right, ButtonState.Down, Liikuta, "Liikkuu oikealle", _pelaaja2, Nopeus);
             Keyboard.Listen(Key.Up, ButtonState.Pressed, Hyppaa, "Pelaaja hyppää", _pelaaja2, HyppyNopeus);
             Keyboard.Listen(Key.Down, ButtonState.Pressed, Hyppaa, "Pelaaja ALAS!", _pelaaja2, -HyppyNopeus);
-            Keyboard.Listen(Key.RightControl, ButtonState.Pressed, Lyominen, "Pelaaja lyö", _pelaaja2);
+            Keyboard.Listen(Key.RightControl, ButtonState.Pressed, Ampuminen, "Pelaaja lyö", _pelaaja2);
 
             Keyboard.Listen(Key.Escape, ButtonState.Pressed, Pausetus, "Pysäyttää pelin");
         }
 
 
+        /// <summary>
+        /// Pistää pelaajan liikkumaa
+        /// </summary>
         private void Liikuta(PlatformCharacter hahmo, double nopeus)
         {
             hahmo.Walk(nopeus);
@@ -132,12 +162,18 @@ namespace ProjectFG
         }
 
 
+        /// <summary>
+        /// antaa pelaajan hypätä
+        /// </summary>
         private void Hyppaa(PlatformCharacter hahmo, double nopeus)
         {
             hahmo.Jump(nopeus);
         }
 
 
+        /// <summary>
+        /// Avaa tai sulkee pausemenun
+        /// </summary>
         private void Pausetus()
         {
             if (IsPaused)
@@ -162,6 +198,9 @@ namespace ProjectFG
         }
 
 
+        /// <summary>
+        /// Sulkee pausemenun
+        /// </summary>
         private void SuljeValikko()
         {
             if (IsPaused)
@@ -174,6 +213,9 @@ namespace ProjectFG
         }
 
 
+        /// <summary>
+        /// Jatkaa peliä
+        /// </summary>
         private void JatkaPelia()
         {
             if (IsPaused)
@@ -186,6 +228,9 @@ namespace ProjectFG
         }
 
 
+        /// <summary>
+        /// Vaihtaa pelin
+        /// </summary>
         private void Pauseeminen()
         {
             if (IsPaused)
@@ -201,6 +246,9 @@ namespace ProjectFG
         }
 
 
+        /// <summary>
+        /// Aloittaa pelin alusta ja alustaa kaiken alusta
+        /// </summary>
         private void AloitaAlusta()
         {
             ClearAll();
@@ -219,7 +267,6 @@ namespace ProjectFG
 
             MasterVolume = 0.5;
         }
-
 
     }
 }
