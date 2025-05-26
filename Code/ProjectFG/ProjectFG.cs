@@ -17,61 +17,63 @@ namespace ProjectFG
     /// </summary>
     public partial class ProjectFG : PhysicsGame
     {
+        private Image _taustaKuva = LoadImage("main-menu.png");
+        private Image _pelaajaKuva1 = LoadImage("playerkuva.png");
+        private Image _pelaajaKuva2 = LoadImage("playerkuva2.png");
+        private Image _voitto1 = LoadImage("pleijer1voitto.png");
+        private Image _voitto2 = LoadImage("pleijer2voitto.png");
+        private Image _aikaLoppui = LoadImage("aikaloppui.png");
+        private SoundEffect _gunShot = LoadSoundEffect("peakgun.wav");
+        private Image[] _bAmpuminen = LoadImages("1ampuuframe1.png", "1ampuuframe2.png", "1ampuuframe3.png", "1ampuuframe4.png");
+        private Image[] _rAmpuminen = LoadImages("2ampuuframe1.png", "2ampuuframe2.png", "2ampuuframe3.png", "2ampuuframe4.png");
+        private Image[] _bAveleminen = LoadImages("kavelee1.png", "kavelee2.png", "kavelee3.png", "kavelee4.png", "kavelee5.png", "kavelee6.png");
 
-    private Image taustakuva = LoadImage("main-menu.png");
-        /// <summary>
-        /// Luodaan alkuvalikko, jossa voidaan valita pelin aloitus tai poistuminen. Laittaa myös taustan ja musat soimaan.
-        /// </summary>
+        private MultiSelectWindow _pauseValikko;
+
+
         public override void Begin()
         {
-            Image menukuva = LoadImage("main-menu.png");
-            Level.Background.Image = menukuva;
+            Image menuKuva = LoadImage("main-menu.png");
+            Level.Background.Image = menuKuva;
+
             string[] vaihtoehdot = { "PELAA", "POISTU" };
-            MultiSelectWindow alkuvalikko = new MultiSelectWindow("PÄÄVALIKKO", vaihtoehdot);
-            alkuvalikko.AddItemHandler(0, Alotus);
-            alkuvalikko.AddItemHandler(1, Exit);
-            Add(alkuvalikko);
+            MultiSelectWindow alkuValikko = new MultiSelectWindow("PÄÄVALIKKO", vaihtoehdot);
+
+            alkuValikko.AddItemHandler(0, Alotus);
+            alkuValikko.AddItemHandler(1, Exit);
+
+            Add(alkuValikko);
+
             MediaPlayer.Play("mainmenu");
         }
 
-        /// <summary>
-        /// Pelin alkaessa säätää kameran, luo kentän, lisää taistelumusat ja näppaimet.
-        /// </summary>
+
         public void Alotus()
         {
             Gravity = new Vector(0, -1000);
-            player1Health = MAX_HEALTH;
-            player2Health = MAX_HEALTH;
+
+            _pelaaja1Hp = MaxHp;
+            _pelaaja2Hp = MaxHp;
+
             LuoKentta();
             LisaaNappaimet();
-            hpbar();
-            Timer(MaxAika);
-            /// LocationListener(hitbox1, pelaaja1);
+            HpBar();
+            Ajastin(MaxAika);
+
             Camera.Position = new Vector(0, 0);
             Camera.ZoomFactor = 2;
             Camera.StayInLevel = false;
+
             MediaPlayer.Volume = 0.3;
             MediaPlayer.Play("combat");
 
             MasterVolume = 0.5;
-            AddCollisionHandler(pelaaja1, "barrier", Barrieri);
-            AddCollisionHandler(pelaaja2, "barrier", Barrieri);
+
+            AddCollisionHandler(_pelaaja1, "barrier", Barrieri);
+            AddCollisionHandler(_pelaaja2, "barrier", Barrieri);
         }
 
 
-        private Image pelaajakuva1 = LoadImage("playerkuva.png");
-        private Image pelaajakuva2 = LoadImage("playerkuva2.png");
-        private Image voitto1 = LoadImage("pleijer1voitto.png");
-        private Image voitto2 = LoadImage("pleijer2voitto.png");
-        private Image aikaloppui = LoadImage("aikaloppui.png");
-        private SoundEffect gunshot = LoadSoundEffect("peakgun.wav");
-        private Image[] bampuminen = LoadImages("1ampuuframe1.png", "1ampuuframe2.png", "1ampuuframe3.png", "1ampuuframe4.png");
-        private Image[] rampuminen = LoadImages("2ampuuframe1.png", "2ampuuframe2.png", "2ampuuframe3.png", "2ampuuframe4.png");
-        private Image[] baveleminen = LoadImages("kavelee1.png", "kavelee2.png", "kavelee3.png", "kavelee4.png", "kavelee5.png", "kavelee6.png");
-
-        /// <summary>
-        /// Värkkää kentta1.txt tiedoston mukaan kentän, jossa on pelaajat ja taso, jota voi muokata jos jaksaa.
-        /// </summary>
         private void LuoKentta()
         {
             TileMap kentta = TileMap.FromLevelAsset("kentta1.txt");
@@ -79,14 +81,12 @@ namespace ProjectFG
             kentta.SetTileMethod('N', LisaaPelaaja);
             kentta.SetTileMethod('M', LisaaPelaaja2);
             kentta.SetTileMethod('-', LisaaBarrier);
-            kentta.Execute(RUUDUN_KOKO, RUUDUN_KOKO);
+            kentta.Execute(RuudunKoko, RuudunKoko);
 
-            Level.Background.Image = taustakuva;
+            Level.Background.Image = _taustaKuva;
         }
 
-        /// <summary>
-        /// Tekee tasosta physicsobjektin ja muuttaa sen värin.
-        /// </summary>
+
         private void LisaaTaso(Vector paikka, double leveys, double korkeus)
         {
             PhysicsObject taso = PhysicsObject.CreateStaticObject(leveys, korkeus + 10);
@@ -95,9 +95,7 @@ namespace ProjectFG
             Add(taso);
         }
 
-        /// <summary>
-        /// Hökälöi kaikki pelaajien näppäimet ja hommat.
-        /// </summary>
+
         private void LisaaBarrier(Vector paikka, double leveys, double korkeus)
         {
             PhysicsObject barrier = PhysicsObject.CreateStaticObject(leveys, korkeus);
@@ -111,122 +109,109 @@ namespace ProjectFG
 
         private void LisaaNappaimet()
         {
+            Keyboard.Listen(Key.A, ButtonState.Down, Liikuta, "Liikkuu vasemmalle", _pelaaja1, -Nopeus);
+            Keyboard.Listen(Key.D, ButtonState.Down, Liikuta, "Liikkuu oikealle", _pelaaja1, Nopeus);
+            Keyboard.Listen(Key.W, ButtonState.Pressed, Hyppaa, "Pelaaja hyppää", _pelaaja1, HyppyNopeus);
+            Keyboard.Listen(Key.F, ButtonState.Pressed, Lyominen, "Pelaaja lyö", _pelaaja1);
 
-            Keyboard.Listen(Key.A, ButtonState.Down, Liikuta, "Liikkuu vasemmalle", pelaaja1, -NOPEUS);
-            Keyboard.Listen(Key.D, ButtonState.Down, Liikuta, "Liikkuu vasemmalle", pelaaja1, NOPEUS);
-            Keyboard.Listen(Key.W, ButtonState.Pressed, Hyppaa, "Pelaaja hyppää", pelaaja1, HYPPYNOPEUS);
-            Keyboard.Listen(Key.F, ButtonState.Pressed, Lyominen, "Pelaaja lyö", pelaaja1);
 
-
-            Keyboard.Listen(Key.Left, ButtonState.Down, Liikuta, "Liikkuu vasemmalle", pelaaja2, -NOPEUS);
-            Keyboard.Listen(Key.Right, ButtonState.Down, Liikuta, "Liikkuu vasemmalle", pelaaja2, NOPEUS);
-            Keyboard.Listen(Key.Up, ButtonState.Pressed, Hyppaa, "Pelaaja hyppää", pelaaja2, HYPPYNOPEUS);
-            Keyboard.Listen(Key.Down, ButtonState.Pressed, Hyppaa, "Pelaaja ALAS!", pelaaja2, -HYPPYNOPEUS);
-            Keyboard.Listen(Key.RightControl, ButtonState.Pressed, Lyominen, "Pelaaja lyö", pelaaja2);
+            Keyboard.Listen(Key.Left, ButtonState.Down, Liikuta, "Liikkuu vasemmalle", _pelaaja2, -Nopeus);
+            Keyboard.Listen(Key.Right, ButtonState.Down, Liikuta, "Liikkuu oikealle", _pelaaja2, Nopeus);
+            Keyboard.Listen(Key.Up, ButtonState.Pressed, Hyppaa, "Pelaaja hyppää", _pelaaja2, HyppyNopeus);
+            Keyboard.Listen(Key.Down, ButtonState.Pressed, Hyppaa, "Pelaaja ALAS!", _pelaaja2, -HyppyNopeus);
+            Keyboard.Listen(Key.RightControl, ButtonState.Pressed, Lyominen, "Pelaaja lyö", _pelaaja2);
 
             Keyboard.Listen(Key.Escape, ButtonState.Pressed, Pausetus, "Pysäyttää pelin");
         }
 
-        /// <summary>
-        /// Tekee pelaajan kävelyn animaatiot.
-        /// </summary>
+
         private void Liikuta(PlatformCharacter hahmo, double nopeus)
         {
             hahmo.Walk(nopeus);
-            pelaaja1.AnimWalk = new Animation(baveleminen);
+            _pelaaja1.AnimWalk = new Animation(_bAveleminen);
         }
 
-        /// <summary>
-        /// Saa pelaajan hyppäämään.
-        /// </summary>
+
         private void Hyppaa(PlatformCharacter hahmo, double nopeus)
         {
             hahmo.Jump(nopeus);
         }
 
 
-        private MultiSelectWindow pausevalikko;
-
-        /// <summary>
-        /// Hökälöi pausevalikon esciä painettaessa, jossa on vaihtoehdot jatkaa peliä tai aloittaa alusta.
-        /// </summary>
         private void Pausetus()
         {
             if (IsPaused)
             {
-                Remove(pausevalikko);
-                pausevalikko = null;
+                Remove(_pauseValikko);
+                _pauseValikko = null;
                 Pause();
             }
             else
             {
-                if (pausevalikko == null)
+                if (_pauseValikko == null)
                 {
-                    pausevalikko = new MultiSelectWindow("TAUKO", "ALOITA ALUSTA", "POISTU");
-                    pausevalikko.Closed += (handler) => SuljeValikko();
-                    pausevalikko.AddItemHandler(0, AloitaAlusta);
-                    pausevalikko.AddItemHandler(1, Exit);
+                    _pauseValikko = new MultiSelectWindow("TAUKO", "ALOITA ALUSTA", "POISTU");
+                    _pauseValikko.Closed += (handler) => SuljeValikko();
+                    _pauseValikko.AddItemHandler(0, AloitaAlusta);
+                    _pauseValikko.AddItemHandler(1, Exit);
                 }
-                Add(pausevalikko);
+
+                Add(_pauseValikko);
                 Pause();
             }
         }
 
-        /// <summary>
-        /// Sulkee pausevalikon.
-        /// </summary>
+
         private void SuljeValikko()
         {
             if (IsPaused)
             {
                 Pause();
             }
-            Remove(pausevalikko);
-            pausevalikko = null;
+
+            Remove(_pauseValikko);
+            _pauseValikko = null;
         }
 
-        /// <summary>
-        /// Jatkaa peliä kun painetaan esciä.
-        /// </summary>
+
         private void JatkaPelia()
         {
             if (IsPaused)
             {
                 Pause();
             }
-            Remove(pausevalikko);
-            pausevalikko = null;
+
+            Remove(_pauseValikko);
+            _pauseValikko = null;
         }
 
-        /// <summary>
-        /// Tsiigaa onko pausevalikko auki vai ei.
-        /// </summary>
-        private void pauseeminen()
+
+        private void Pauseeminen()
         {
             if (IsPaused)
             {
-                Remove(pausevalikko);
+                Remove(_pauseValikko);
             }
             else
             {
-                Add(pausevalikko);
+                Add(_pauseValikko);
             }
+
             Pause();
         }
 
-        /// <summary>
-        /// Tekee kaikki hommat kun peli alkaa alusta.
-        /// </summary>
-        void AloitaAlusta()
+
+        private void AloitaAlusta()
         {
             ClearAll();
             LuoKentta();
-            player1Health = MAX_HEALTH;
-            player2Health = MAX_HEALTH;
-            hpbar();
+
+            _pelaaja1Hp = MaxHp;
+            _pelaaja2Hp = MaxHp;
+
+            HpBar();
             LisaaNappaimet();
-            Update(Time);
-            Timer(MaxAika);
+            Ajastin(MaxAika);
 
             Camera.Position = new Vector(0, 0);
             Camera.ZoomFactor = 2;

@@ -1,113 +1,109 @@
 using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.ComponentModel.Design;
-using System.Diagnostics.Tracing;
-using System.Net.Mail;
-using System.Threading;
-using System.Xml;
-using FarseerPhysics.Collision;
 using Jypeli;
 using Jypeli.Assets;
 using Jypeli.Controls;
 using Jypeli.Widgets;
-using Microsoft.DotNet.PlatformAbstractions;
-namespace ProjectFG ;
+
+namespace ProjectFG;
 
 public partial class ProjectFG
 {
-    private const double NOPEUS = 200;
-    private const double HYPPYNOPEUS = 500;
-    private const int RUUDUN_KOKO = 40;
-    private const double MAX_HEALTH = 200;
-    private double player1Health = MAX_HEALTH;
-    private double player2Health = MAX_HEALTH;
-    private PlatformCharacter pelaaja1;
-    private PlatformCharacter pelaaja2;
-    private PhysicsObject lyonti;
-    private ProgressBar hp1;
-    private ProgressBar hp2;
-    private PhysicsObject p1ragdoll;
-    private PhysicsObject p2ragdoll;
-    private Label pelaaja1HP;
-    private Label pelaaja2HP;
-    private double MaxAika = 120; // Max time in seconds
-    private GameObject GameVoitto1;
-    private GameObject GameVoitto2;
-
-    ///  private Image voitto1;
-    /// private Image voitto2;
-    /// private GameObject GameVoitto1;
-    /// private GameObject GameVoitto2;
-
+    private const double Nopeus = 200;
+    private const double HyppyNopeus = 500;
+    private const int RuudunKoko = 40;
+    private const double MaxHp = 200;
+    private double _pelaaja1Hp = MaxHp;
+    private double _pelaaja2Hp = MaxHp;
+    private PlatformCharacter _pelaaja1;
+    private PlatformCharacter _pelaaja2;
+    private PhysicsObject _lyonti;
+    private ProgressBar _hp1;
+    private ProgressBar _hp2;
+    private PhysicsObject _p1Ragdoll;
+    private PhysicsObject _p2Ragdoll;
+    private Label _pelaaja1HpTeksti;
+    private Label _pelaaja2HpTeksti;
+    private double MaxAika = 120;
+    private GameObject _gameVoitto1;
+    private GameObject _gameVoitto2;
+    private Label _tasapeli;
 
 
     private void LisaaPelaaja(Vector paikka, double leveys, double korkeus)
     {
-        pelaaja1 = new PlatformCharacter(21, 32);
-        pelaaja1.Position = paikka;
-        pelaaja1.Mass = 4.0;
-        pelaaja1.Image = pelaajakuva1;
-        pelaaja1.CollisionIgnoreGroup = 1;
-        Add(pelaaja1);
+        _pelaaja1 = new PlatformCharacter(21, 32);
+        _pelaaja1.Position = paikka;
+        _pelaaja1.Mass = 4.0;
+        _pelaaja1.Image = _pelaajaKuva1;
+        _pelaaja1.CollisionIgnoreGroup = 1;
+        Add(_pelaaja1);
     }
 
 
     private void LisaaPelaaja2(Vector paikka, double leveys, double korkeus)
     {
-        pelaaja2 = new PlatformCharacter(21, 32);
-        pelaaja2.Position = paikka;
-        pelaaja2.Mass = 4.0;
-        pelaaja2.Image = pelaajakuva2;
-        pelaaja2.CollisionIgnoreGroup = 2;
-        Add(pelaaja2);
+        _pelaaja2 = new PlatformCharacter(21, 32);
+        _pelaaja2.Position = paikka;
+        _pelaaja2.Mass = 4.0;
+        _pelaaja2.Image = _pelaajaKuva2;
+        _pelaaja2.CollisionIgnoreGroup = 2;
+        Add(_pelaaja2);
     }
 
-    private void hpbar()
+
+    private void HpBar()
     {
-        hp1 = new ProgressBar(player1Health, 20);
-        hp1.Position = new Vector(Screen.Left + 120, Screen.Top - 30);
-        hp1.Color = Color.Green;
-        hp1.BorderColor = Color.Black;
-        Add(hp1);
+        ProgressBar[] hPPaarit = new ProgressBar[2];
+        Label[] teksti = new Label[2];
+        double[] healtit = { _pelaaja1Hp, _pelaaja2Hp };
+        Vector[] paarienSijanti = {
+            new Vector(Screen.Left + 120, Screen.Top - 30),
+            new Vector(Screen.Right - 120, Screen.Top - 30)
+        };
+        Vector[] labelPositions = {
+            new Vector(Screen.Left + 275, Screen.Top - 30),
+            new Vector(Screen.Right - 275, Screen.Top - 30)
+        };
+        string[] nimet = { "Pelaaja 1:", "Pelaaja 2:" };
 
-        hp2 = new ProgressBar(player2Health, 20);
-        hp2.Position = new Vector(Screen.Right - 120, Screen.Top - 30);
-        hp2.Color = Color.Green;
-        hp2.BorderColor = Color.Black;
-        Add(hp2);
+        for (int i = 0; i < 2; i++)
+        {
+            hPPaarit[i] = new ProgressBar(healtit[i], 20);
+            hPPaarit[i].Position = paarienSijanti[i];
+            hPPaarit[i].Color = Color.Green;
+            hPPaarit[i].BorderColor = Color.Black;
+            Add(hPPaarit[i]);
 
-        pelaaja1HP = new Label("Pelaaja 1:");
-        pelaaja1HP.Position = new Vector(Screen.Left + 275, Screen.Top - 30);
-        pelaaja1HP.TextColor = Color.White;
-        pelaaja1HP.Color = Color.Transparent;
-        Add(pelaaja1HP);
+            teksti[i] = new Label(nimet[i]);
+            teksti[i].Position = labelPositions[i];
+            teksti[i].TextColor = Color.White;
+            teksti[i].Color = Color.Transparent;
+            Add(teksti[i]);
+        }
 
-        pelaaja2HP = new Label("Pelaaja 2:");
-        pelaaja2HP.Position = new Vector(Screen.Right - 275, Screen.Top - 30);
-        pelaaja2HP.TextColor = Color.White;
-        pelaaja2HP.Color = Color.Transparent;
-        Add(pelaaja2HP);
+        _hp1 = hPPaarit[0];
+        _hp2 = hPPaarit[1];
+        _pelaaja1HpTeksti = teksti[0];
+        _pelaaja2HpTeksti = teksti[1];
     }
 
 
-    private Label TimerDisplay;
-
-    private void Timer(double maxAika)
+    private void Ajastin(double maxAika)
     {
         Jypeli.Timer timer = new Jypeli.Timer();
-        TimerDisplay = new Label(maxAika.ToString("0"));
-        TimerDisplay.Position = new Vector(0, Screen.Top - 30); // Centered at the top
-        TimerDisplay.TextColor = Color.White;
-        TimerDisplay.Color = Color.Transparent;
-        Add(TimerDisplay);
+        _tasapeli = new Label(maxAika.ToString("0"));
+        _tasapeli.Position = new Vector(0, Screen.Top - 30);
+        _tasapeli.TextColor = Color.White;
+        _tasapeli.Color = Color.Transparent;
+        Add(_tasapeli);
 
-        timer.Interval = 1; // 1 second interval
+        timer.Interval = 1;
         timer.Timeout += () =>
         {
             maxAika -= 1;
-            TimerDisplay.Text = maxAika.ToString("0"); // Update the timer display
-            if (pelaaja1.IsDestroyed || pelaaja2.IsDestroyed)
+            _tasapeli.Text = maxAika.ToString("0");
+
+            if (_pelaaja1.IsDestroyed || _pelaaja2.IsDestroyed)
             {
                 timer.Pause();
                 return;
@@ -116,127 +112,136 @@ public partial class ProjectFG
             if (maxAika <= 0)
             {
                 timer.Stop();
-                {
-                    Console.WriteLine("Tasapeli!");
-                    GameObject tasapeli = new GameObject(1536, 1024);
-                    tasapeli.Image = aikaloppui;
-                    tasapeli.Position = new Vector(0, 60);
-                    tasapeli.Size = new Vector(384, 256);
-                    Add(tasapeli);
-                    pelaaja1.Destroy(); // Destroy player 1
-                    pelaaja2.Destroy(); // Destroy player 2
 
-                    Jypeli.Timer.SingleShot(5.0, () =>
-                    {
-                        ClearAll();
-                        Begin();
-                    });
-                }
+                Console.WriteLine("Tasapeli!");
+                GameObject tasapeli = new GameObject(1536, 1024);
+                tasapeli.Image = _aikaLoppui;
+                tasapeli.Position = new Vector(0, 60);
+                tasapeli.Size = new Vector(384, 256);
+                Add(tasapeli);
+                _pelaaja1.Destroy();
+                _pelaaja2.Destroy();
+
+                Jypeli.Timer.SingleShot(5.0, () =>
+                {
+                    ClearAll();
+                    Begin();
+                });
             }
         };
+
         timer.Start();
     }
 
+
     private void Lyominen(PlatformCharacter hahmo)
     {
-        lyonti = new PhysicsObject(2, 1);
-        lyonti.Position = hahmo.Position;
+        _lyonti = new PhysicsObject(2, 1);
+        _lyonti.Position = hahmo.Position;
+
         if (hahmo.IsDestroyed)
         {
             return;
         }
+
         if (hahmo.FacingDirection == Direction.Right)
         {
-            lyonti.Velocity = new Vector(500, 0);
+            _lyonti.Velocity = new Vector(500, 0);
         }
         else
         {
-            lyonti.Velocity = new Vector(-500, 0);
+            _lyonti.Velocity = new Vector(-500, 0);
         }
-        lyonti.Color = Color.Red;
-        lyonti.IgnoresGravity = true;
-        lyonti.Mass = 0;
-        lyonti.CollisionIgnoreGroup = hahmo.CollisionIgnoreGroup;
-        if (hahmo == pelaaja1)
-        {
-            pelaaja1.Animation = new Animation(bampuminen);
-            pelaaja1.Animation.FPS = 8;
-            if (pelaaja1.FacingDirection == Direction.Left)
-            {
-                Animation mbampuminen = Animation.Mirror(pelaaja1.Animation);
-            }
-            pelaaja1.Size = new Vector(32, 32);
-            pelaaja1.Animation.Start(1);
-            Add(lyonti);
-            gunshot.Play();
-        }
-        else
-        {
-            pelaaja2.Animation = new Animation(rampuminen);
-            pelaaja2.Animation.FPS = 8;
-            if (pelaaja2.FacingDirection == Direction.Left)
-            {
-                Animation mrampuminen = Animation.Mirror(pelaaja2.Animation);
-            }
-            pelaaja2.Size = new Vector(32, 32);
-            pelaaja2.Animation.Start(1);
-            Add(lyonti);
-            gunshot.Play();
 
-        }
-        if (hahmo == pelaaja1)
+        _lyonti.Color = Color.Red;
+        _lyonti.IgnoresGravity = true;
+        _lyonti.Mass = 0;
+        _lyonti.CollisionIgnoreGroup = hahmo.CollisionIgnoreGroup;
+
+        if (hahmo == _pelaaja1)
         {
-            AddCollisionHandler(lyonti, pelaaja2, PelaajatTormaavatHandler);
+            _pelaaja1.Animation = new Animation(_bAmpuminen);
+            _pelaaja1.Animation.FPS = 8;
+
+            if (_pelaaja1.FacingDirection == Direction.Left)
+            {
+                Animation mbampuminen = Animation.Mirror(_pelaaja1.Animation);
+            }
+
+            _pelaaja1.Size = new Vector(32, 32);
+            _pelaaja1.Animation.Start(1);
+            Add(_lyonti);
+            _gunShot.Play();
         }
-        else if (hahmo == pelaaja2)
+        else
         {
-            AddCollisionHandler(lyonti, pelaaja1, PelaajatTormaavatHandler);
+            _pelaaja2.Animation = new Animation(_rAmpuminen);
+            _pelaaja2.Animation.FPS = 8;
+
+            if (_pelaaja2.FacingDirection == Direction.Left)
+            {
+                Animation mrampuminen = Animation.Mirror(_pelaaja2.Animation);
+            }
+
+            _pelaaja2.Size = new Vector(32, 32);
+            _pelaaja2.Animation.Start(1);
+            Add(_lyonti);
+            _gunShot.Play();
+        }
+
+        if (hahmo == _pelaaja1)
+        {
+            AddCollisionHandler(_lyonti, _pelaaja2, PelaajatTormaa);
+        }
+        else if (hahmo == _pelaaja2)
+        {
+            AddCollisionHandler(_lyonti, _pelaaja1, PelaajatTormaa);
         }
     }
 
 
-    private void PelaajatTormaavatHandler(PhysicsObject lyonti, PhysicsObject kohde)
+    private void PelaajatTormaa(PhysicsObject lyonti, PhysicsObject kohde)
     {
-        if (kohde == pelaaja1)
-        {
-            lyonti.Destroy(); // Tuhoaa lyöntiobjektin
-            player1Health -= 20; // Vähennetään pelaaja 1:n terveyttä
-            Console.WriteLine("Pelaaja 1:n terveys: " + player1Health);
-            CheckHealth(player1Health, player2Health); // Tarkistaa pelaajien terveyden
-            hp1.Width = player1Health; // Nollaa pelaaja 1:n nopeuden
-        }
-        else if (kohde == pelaaja2)
+        if (kohde == _pelaaja1)
         {
             lyonti.Destroy();
-            player2Health -= 20; // Vähennetään pelaaja 2:n terveyttä
-            Console.WriteLine("Pelaaja 2:n terveys: " + player2Health);
-            CheckHealth(player1Health, player2Health); // Tarkistaa pelaajien terveyden
-            hp2.Width = player2Health;
+            _pelaaja1Hp -= 20;
+            Console.WriteLine("Pelaaja 1:n terveys: " + _pelaaja1Hp);
+            CheckHealth(_pelaaja1Hp, _pelaaja2Hp);
+            _hp1.Width = _pelaaja1Hp;
+        }
+        else if (kohde == _pelaaja2)
+        {
+            lyonti.Destroy();
+            _pelaaja2Hp -= 20;
+            Console.WriteLine("Pelaaja 2:n terveys: " + _pelaaja2Hp);
+            CheckHealth(_pelaaja1Hp, _pelaaja2Hp);
+            _hp2.Width = _pelaaja2Hp;
         }
     }
 
 
-    void CheckHealth(double player1Health, double player2Health)
+    private void CheckHealth(double player1Health, double player2Health)
     {
         if (player1Health <= 0)
         {
-            pelaaja1.Destroy();
+            _pelaaja1.Destroy();
             Console.WriteLine("Pelaaja 2 voitti!");
-            p1ragdoll = new PhysicsObject(21, 32);
-            p1ragdoll.Mass = 0.4925;
-            p1ragdoll.Image = pelaajakuva1;
-            p1ragdoll.CollisionIgnoreGroup = 1;
-            p1ragdoll.Position = pelaaja1.Position;
-            p1ragdoll.Velocity = new Vector(300, 200);
-            p1ragdoll.IgnoresGravity = true;
-            Add(p1ragdoll);
-            GameVoitto2 = new GameObject(1536, 1024);
-            GameVoitto2.Image = voitto2;
-            GameVoitto2.Position = new Vector(0, 60);
-            GameVoitto2.Size = new Vector(384, 256);
-            Add(GameVoitto2);
-            pelaaja1.Destroy();
-            pelaaja2.Destroy();
+            _p1Ragdoll = new PhysicsObject(21, 32);
+            _p1Ragdoll.Mass = 0.4925;
+            _p1Ragdoll.Image = _pelaajaKuva1;
+            _p1Ragdoll.CollisionIgnoreGroup = 1;
+            _p1Ragdoll.Position = _pelaaja1.Position;
+            _p1Ragdoll.Velocity = new Vector(300, 200);
+            _p1Ragdoll.IgnoresGravity = true;
+            Add(_p1Ragdoll);
+            _gameVoitto2 = new GameObject(1536, 1024);
+            _gameVoitto2.Image = _voitto2;
+            _gameVoitto2.Position = new Vector(0, 60);
+            _gameVoitto2.Size = new Vector(384, 256);
+            Add(_gameVoitto2);
+            _pelaaja1.Destroy();
+            _pelaaja2.Destroy();
 
             Jypeli.Timer.SingleShot(5.0, () =>
             {
@@ -244,26 +249,25 @@ public partial class ProjectFG
                 Begin();
             });
         }
-
         else if (player2Health <= 0)
         {
-            pelaaja2.Destroy();
+            _pelaaja2.Destroy();
             Console.WriteLine("Pelaaja 1 voitti!");
-            p2ragdoll = new PhysicsObject(21, 32);
-            p2ragdoll.Mass = 0.4925;
-            p2ragdoll.Image = pelaajakuva2;
-            p2ragdoll.CollisionIgnoreGroup = 2;
-            p2ragdoll.Position = pelaaja2.Position;
-            p2ragdoll.Velocity = new Vector(-300, 200);
-            p2ragdoll.IgnoresGravity = true;
-            Add(p2ragdoll);
-            GameVoitto1 = new GameObject(1536, 1024);
-            GameVoitto1.Image = voitto1;
-            GameVoitto1.Position = new Vector(0, 60);
-            GameVoitto1.Size = new Vector(384, 256);
-            Add(GameVoitto1);
-            pelaaja1.Destroy();
-            pelaaja2.Destroy();
+            _p2Ragdoll = new PhysicsObject(21, 32);
+            _p2Ragdoll.Mass = 0.4925;
+            _p2Ragdoll.Image = _pelaajaKuva2;
+            _p2Ragdoll.CollisionIgnoreGroup = 2;
+            _p2Ragdoll.Position = _pelaaja2.Position;
+            _p2Ragdoll.Velocity = new Vector(-300, 200);
+            _p2Ragdoll.IgnoresGravity = true;
+            Add(_p2Ragdoll);
+            _gameVoitto1 = new GameObject(1536, 1024);
+            _gameVoitto1.Image = _voitto1;
+            _gameVoitto1.Position = new Vector(0, 60);
+            _gameVoitto1.Size = new Vector(384, 256);
+            Add(_gameVoitto1);
+            _pelaaja1.Destroy();
+            _pelaaja2.Destroy();
 
             Jypeli.Timer.SingleShot(5.0, () =>
             {
@@ -271,24 +275,27 @@ public partial class ProjectFG
                 Begin();
             });
         }
+
         return;
     }
 
-private void Barrieri(PhysicsObject pelaaja, PhysicsObject barrieri)
+
+    private void Barrieri(PhysicsObject pelaaja, PhysicsObject barrieri)
     {
-        if (pelaaja == pelaaja1)
+        if (pelaaja == _pelaaja1)
         {
-            player1Health = 0;
-            hp1.Width = 0;
-            CheckHealth(player1Health, player2Health);
+            _pelaaja1Hp = 0;
+            _hp1.Width = 0;
+            CheckHealth(_pelaaja1Hp, _pelaaja2Hp);
         }
-        else if (pelaaja == pelaaja2)
+        else if (pelaaja == _pelaaja2)
         {
-            player2Health = 0;
-            hp2.Width = 0;
-            CheckHealth(player1Health, player2Health);
+            _pelaaja2Hp = 0;
+            _hp2.Width = 0;
+            CheckHealth(_pelaaja1Hp, _pelaaja2Hp);
         }
     }
+
 
 }
 

@@ -13,11 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("ProjectFG")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-<<<<<<< HEAD
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+b994991e069b39b0a5126355dc72ddb9360de0a6")]
-=======
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+d2a155768e8277f84584be48b3f2c14e86f5e2f5")]
->>>>>>> e00fe2f (GRRAAHH NÄÄSILÄ NYT SE PLEIJER 1 KUVA LAITETTU)
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+db2099412550eed8c604506bd6f12caf23f42bde")]
 [assembly: System.Reflection.AssemblyProductAttribute("ProjectFG")]
 [assembly: System.Reflection.AssemblyTitleAttribute("ProjectFG")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
