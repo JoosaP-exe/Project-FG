@@ -67,13 +67,13 @@ namespace ProjectFG
         {
             Gravity = new Vector(0, -1000);
 
-            _pelaaja1Hp = MaxHp;
-            _pelaaja2Hp = MaxHp;
+            _hp1.Value = 200;
+            _hp2.Value = 200;
 
             LuoKentta();
             LisaaNappaimet();
             HpBar();
-            Ajastin(MaxAika);
+            Ajastin();
 
             Camera.Position = new Vector(0, 0);
             Camera.ZoomFactor = 2;
@@ -94,13 +94,10 @@ namespace ProjectFG
             TileMap kentta = TileMap.FromLevelAsset("kentta1.txt");
             kentta.SetTileMethod('#', LisaaTaso);
             kentta.SetTileMethod('N', LisaaPelaaja);
-            kentta.SetTileMethod('M', LisaaPelaaja2);
-            kentta.SetTileMethod('-', LisaaBarrier);
+            kentta.SetTileMethod('M', LisaaPelaaja);
             kentta.Execute(RuudunKoko, RuudunKoko);
 
             Level.Background.Image = _taustaKuva;
-            AddCollisionHandler(_pelaaja1, "barrier", Barrieri);
-            AddCollisionHandler(_pelaaja2, "barrier", Barrieri);
         }
 
 
@@ -116,19 +113,6 @@ namespace ProjectFG
         }
 
 
-        /// <summary>
-        /// Lisää kentälle barrierin, johon osuessa kuolee
-        /// </summary>
-        private void LisaaBarrier(Vector paikka, double leveys, double korkeus)
-        {
-            PhysicsObject barrier = PhysicsObject.CreateStaticObject(leveys, korkeus);
-            barrier.Position = paikka;
-            barrier.Color = Color.Transparent;
-            barrier.Tag = "barrier";
-            barrier.IgnoresCollisionResponse = true;
-            Add(barrier);
-        }
-
 
         /// <summary>
         /// Lisäätään näppäimet pelaajille
@@ -138,14 +122,14 @@ namespace ProjectFG
             Keyboard.Listen(Key.A, ButtonState.Down, Liikuta, "Liikkuu vasemmalle", _pelaaja1, -Nopeus);
             Keyboard.Listen(Key.D, ButtonState.Down, Liikuta, "Liikkuu oikealle", _pelaaja1, Nopeus);
             Keyboard.Listen(Key.W, ButtonState.Pressed, Hyppaa, "Pelaaja hyppää", _pelaaja1, HyppyNopeus);
-            Keyboard.Listen(Key.F, ButtonState.Pressed, Ampuminen, "Pelaaja lyö", _pelaaja1);
+            Keyboard.Listen(Key.F, ButtonState.Pressed, () => Ampuminen(_pelaaja1, _pelaaja2, new Animation(_bAmpuminen), _bAmpuminen, _gunShot), "Pelaaja lyö");
 
 
             Keyboard.Listen(Key.Left, ButtonState.Down, Liikuta, "Liikkuu vasemmalle", _pelaaja2, -Nopeus);
             Keyboard.Listen(Key.Right, ButtonState.Down, Liikuta, "Liikkuu oikealle", _pelaaja2, Nopeus);
             Keyboard.Listen(Key.Up, ButtonState.Pressed, Hyppaa, "Pelaaja hyppää", _pelaaja2, HyppyNopeus);
             Keyboard.Listen(Key.Down, ButtonState.Pressed, Hyppaa, "Pelaaja ALAS!", _pelaaja2, -HyppyNopeus);
-            Keyboard.Listen(Key.RightControl, ButtonState.Pressed, Ampuminen, "Pelaaja lyö", _pelaaja2);
+            Keyboard.Listen(Key.RightControl, ButtonState.Pressed, () => Ampuminen(_pelaaja2, _pelaaja1, new Animation(_rAmpuminen), _rAmpuminen, _gunShot), "Pelaaja lyö");
 
             Keyboard.Listen(Key.Escape, ButtonState.Pressed, Pausetus, "Pysäyttää pelin");
         }
@@ -254,12 +238,12 @@ namespace ProjectFG
             LuoKentta();
 
             
-            _pelaaja1Hp = MaxHp;
-            _pelaaja2Hp = MaxHp;
+            _hp1.Value = 200;
+            _hp2.Value = 200;
 
             HpBar();
             LisaaNappaimet();
-            Ajastin(MaxAika);
+            Ajastin();
 
             Camera.Position = new Vector(0, 0);
             Camera.ZoomFactor = 2;
