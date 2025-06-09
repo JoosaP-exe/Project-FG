@@ -65,6 +65,10 @@ namespace ProjectFG
         /// </summary>
         public void Alotus()
         {
+
+            pelaajienMaara = 0;
+            _pelaaja1 = null;
+            _pelaaja2 = null;
             Gravity = new Vector(0, -1000);
 
             _hp1.Value = 200;
@@ -163,7 +167,7 @@ namespace ProjectFG
             {
                 Remove(_pauseValikko);
                 _pauseValikko = null;
-                Pause();
+                Pause(); // Jatkaa peliä
             }
             else
             {
@@ -176,7 +180,7 @@ namespace ProjectFG
                 }
 
                 Add(_pauseValikko);
-                Pause();
+                Pause(); // Pysäyttää pelin
             }
         }
 
@@ -186,46 +190,12 @@ namespace ProjectFG
         /// </summary>
         private void SuljeValikko()
         {
-            if (IsPaused)
-            {
-                Pause();
-            }
-
-            Remove(_pauseValikko);
-            _pauseValikko = null;
-        }
-
-
-        /// <summary>
-        /// Jatkaa peliä
-        /// </summary>
-        private void JatkaPelia()
-        {
-            if (IsPaused)
-            {
-                Pause();
-            }
-
-            Remove(_pauseValikko);
-            _pauseValikko = null;
-        }
-
-
-        /// <summary>
-        /// Vaihtaa pelin
-        /// </summary>
-        private void Pauseeminen()
-        {
-            if (IsPaused)
+            if (_pauseValikko != null)
             {
                 Remove(_pauseValikko);
+                _pauseValikko = null;
+                Pause(); // Tämä jatkaa peliä!
             }
-            else
-            {
-                Add(_pauseValikko);
-            }
-
-            Pause();
         }
 
 
@@ -234,6 +204,11 @@ namespace ProjectFG
         /// </summary>
         private void AloitaAlusta()
         {
+
+        pelaajienMaara = 0;
+        _pelaaja1 = null;
+        _pelaaja2 = null;
+
             ClearAll();
             LuoKentta();
 
