@@ -133,22 +133,23 @@ public partial class ProjectFG
     {
         if (_hp1.Value <= 0)
         {
-            _pelaaja2.Destroy();
             Console.WriteLine("Pelaaja 2 voitti!");
-            _pelaaja1.Mass = 0.4925;
-            _pelaaja1.Image = _pelaajaKuva1;
-            _pelaaja1.CollisionIgnoreGroup = 1;
-            _pelaaja1.Position = _pelaaja1.Position;
-            _pelaaja1.Velocity = new Vector(300, 200);
-            _pelaaja1.IgnoresGravity = true;
+            if (_pelaaja1 != null && !_pelaaja1.IsDestroyed)
+            {
+                _pelaaja1.Mass = 0.4925;
+                _pelaaja1.Image = _pelaajaKuva1;
+                _pelaaja1.CollisionIgnoreGroup = 1;
+                _pelaaja1.Velocity = new Vector(300, 200);
+                _pelaaja1.IgnoresGravity = true;
+            }
             _gameVoitto2 = new GameObject(1536, 1024);
             _gameVoitto2.Image = _voitto2;
             _gameVoitto2.Position = new Vector(0, 60);
             _gameVoitto2.Size = new Vector(384, 256);
             Add(_gameVoitto2);
-            _pelaaja1.Destroy();
-            _pelaaja2.Destroy();
 
+            if (_pelaaja1 != null && !_pelaaja1.IsDestroyed)
+                _pelaaja1.Destroy();
 
             Jypeli.Timer.SingleShot(5.0, () =>
             {
@@ -158,21 +159,23 @@ public partial class ProjectFG
         }
         else if (_hp2.Value <= 0)
         {
-            _pelaaja1.Destroy();
             Console.WriteLine("Pelaaja 1 voitti!");
-            _pelaaja2.Mass = 0.4925;
-            _pelaaja2.Image = _pelaajaKuva2;
-            _pelaaja2.CollisionIgnoreGroup = 2;
-            _pelaaja2.Position = _pelaaja2.Position;
-            _pelaaja2.Velocity = new Vector(-300, 200);
-            _pelaaja2.IgnoresGravity = true;
+            if (_pelaaja2 != null && !_pelaaja2.IsDestroyed)
+            {
+                _pelaaja2.Mass = 0.4925;
+                _pelaaja2.Image = _pelaajaKuva2;
+                _pelaaja2.CollisionIgnoreGroup = 2;
+                _pelaaja2.Velocity = new Vector(-300, 200);
+                _pelaaja2.IgnoresGravity = true;
+            }
             _gameVoitto1 = new GameObject(1536, 1024);
             _gameVoitto1.Image = _voitto1;
             _gameVoitto1.Position = new Vector(0, 60);
             _gameVoitto1.Size = new Vector(384, 256);
             Add(_gameVoitto1);
-            _pelaaja1.Destroy();
-            _pelaaja2.Destroy();
+
+            if (_pelaaja2 != null && !_pelaaja2.IsDestroyed)
+                _pelaaja2.Destroy();
 
             Jypeli.Timer.SingleShot(5.0, () =>
             {

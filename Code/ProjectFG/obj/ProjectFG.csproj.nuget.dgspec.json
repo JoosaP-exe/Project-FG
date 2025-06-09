@@ -1,20 +1,20 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\gr301855\\OneDrive - Jyväskylän koulutuskuntayhtymä Gradia\\Työpöytä\\gitkraken\\Vittupeli2\\Code\\ProjectFG\\ProjectFG.csproj": {}
+    "C:\\Users\\matia\\Downloads\\vittuperkele\\projecti\\Code\\ProjectFG\\ProjectFG.csproj": {}
   },
   "projects": {
-    "C:\\Users\\gr301855\\OneDrive - Jyväskylän koulutuskuntayhtymä Gradia\\Työpöytä\\gitkraken\\Vittupeli2\\Code\\ProjectFG\\ProjectFG.csproj": {
+    "C:\\Users\\matia\\Downloads\\vittuperkele\\projecti\\Code\\ProjectFG\\ProjectFG.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\gr301855\\OneDrive - Jyväskylän koulutuskuntayhtymä Gradia\\Työpöytä\\gitkraken\\Vittupeli2\\Code\\ProjectFG\\ProjectFG.csproj",
+        "projectUniqueName": "C:\\Users\\matia\\Downloads\\vittuperkele\\projecti\\Code\\ProjectFG\\ProjectFG.csproj",
         "projectName": "ProjectFG",
-        "projectPath": "C:\\Users\\gr301855\\OneDrive - Jyväskylän koulutuskuntayhtymä Gradia\\Työpöytä\\gitkraken\\Vittupeli2\\Code\\ProjectFG\\ProjectFG.csproj",
-        "packagesPath": "C:\\Users\\gr301855\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\gr301855\\OneDrive - Jyväskylän koulutuskuntayhtymä Gradia\\Työpöytä\\gitkraken\\Vittupeli2\\Code\\ProjectFG\\obj\\",
+        "projectPath": "C:\\Users\\matia\\Downloads\\vittuperkele\\projecti\\Code\\ProjectFG\\ProjectFG.csproj",
+        "packagesPath": "C:\\Users\\matia\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\matia\\Downloads\\vittuperkele\\projecti\\Code\\ProjectFG\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "C:\\Users\\gr301855\\AppData\\Roaming\\NuGet\\NuGet.Config"
+          "C:\\Users\\matia\\AppData\\Roaming\\NuGet\\NuGet.Config"
         ],
         "originalTargetFrameworks": [
           "net8.0"
@@ -37,7 +37,8 @@
           "enableAudit": "true",
           "auditLevel": "low",
           "auditMode": "direct"
-        }
+        },
+        "SdkAnalysisLevel": "9.0.300"
       },
       "frameworks": {
         "net8.0": {
@@ -86,7 +87,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.410/PortableRuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.300/PortableRuntimeIdentifierGraph.json"
         }
       }
     }
