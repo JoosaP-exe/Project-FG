@@ -35,7 +35,7 @@ public partial class ProjectFG
         if (pelaajienMaara == 1)
         {
             if (_pelaaja1 == null)
-            _pelaaja1 = new PlatformCharacter(21, 32);
+                _pelaaja1 = new PlatformCharacter(21, 32);
             _pelaaja1.Position = paikka;
             _pelaaja1.Mass = 4.0;
             _pelaaja1.Image = _pelaajaKuva1;
@@ -48,7 +48,7 @@ public partial class ProjectFG
         else if (pelaajienMaara == 2)
         {
             if (_pelaaja2 == null)
-            _pelaaja2 = new PlatformCharacter(21, 32);
+                _pelaaja2 = new PlatformCharacter(21, 32);
             _pelaaja2.Position = paikka;
             _pelaaja2.Mass = 4.0;
             _pelaaja2.Image = _pelaajaKuva2;
