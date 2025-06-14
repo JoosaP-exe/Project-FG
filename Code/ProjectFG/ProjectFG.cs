@@ -41,6 +41,7 @@ namespace ProjectFG
         /// <summary>Pelin pausemenu</summary>
         private MultiSelectWindow _pauseValikko;
 
+
         /// <summary>
         /// Käynnistää koko höskän (pelin)
         /// </summary>
@@ -168,7 +169,6 @@ namespace ProjectFG
             {
                 Remove(_pauseValikko);
                 _pauseValikko = null;
-                Pause(); // Jatkaa peliä
             }
             else
             {
@@ -181,8 +181,9 @@ namespace ProjectFG
                 }
 
                 Add(_pauseValikko);
-                Pause(); // Pysäyttää pelin
             }
+
+            Pause();
         }
 
 
@@ -195,7 +196,7 @@ namespace ProjectFG
             {
                 Remove(_pauseValikko);
                 _pauseValikko = null;
-                Pause(); // Tämä jatkaa peliä!
+                Pause();
             }
         }
 

@@ -21,8 +21,6 @@ public partial class ProjectFG
     private DoubleMeter _hp2 = new DoubleMeter(200, 0, 200);
     private ProgressBar[] hpBar = new ProgressBar[2];
     private Label[] hpTeksti = new Label[2];
-
-
    /// <summary>Pelaaja 1 voittokuva</summary>
     private GameObject _gameVoitto1;
     /// <summary>Pelaaja 2 voittokuva</summary>
@@ -118,14 +116,14 @@ public partial class ProjectFG
     {
         if (kohde == _pelaaja1)
         {
-            ammus.Destroy();
             _hp1.Value -= 8;
         }
         else if (kohde == _pelaaja2)
         {
-            ammus.Destroy();
             _hp2.Value -= 8;
         }
+
+        ammus.Destroy();
     }
 
 
