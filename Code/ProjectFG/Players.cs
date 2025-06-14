@@ -8,15 +8,36 @@ namespace ProjectFG;
 
 public partial class ProjectFG
 {
+/// <summary>Pelaajien nopeus</summary>
     private const double Nopeus = 200;
+
+    /// <summary>Pelaajan hyppy nopeus</summary>
     private const double HyppyNopeus = 500;
+
+    /// <summary>Ruudun koko.</summary>
     private const int RuudunKoko = 40;
+    
+    /// <summary>Pelaajan max hp</summary>
     private const double MaxHp = 200;
+
+    /// <summary>Pelaaja 1</summary>
     private PlatformCharacter _pelaaja1;
+
+    /// <summary>Pelaaja 2</summary>
     private PlatformCharacter _pelaaja2;
+
+    /// <summary>Pelaaja 1 hp:eet</summary
     private DoubleMeter _hp1 = new DoubleMeter(200, 0, 200);
+
+    /// <summary>Pelaaja 2 hp:eet</summary>
     private DoubleMeter _hp2 = new DoubleMeter(200, 0, 200);
 
+    /// <summary>
+    /// Lisää pelaajat kentälle 
+    /// </summary>
+    /// <param name="paikka">Pelaajan aloituspaikka </param>
+    /// <param name="leveys">Pelaajan leveys </param>
+    /// <param name="korkeus">Pelaajan korkeus </param>
     private void LisaaPelaaja(Vector paikka, double leveys, double korkeus, int pelaajaNumero)
     {
         if (pelaajaNumero == 1)
@@ -39,6 +60,9 @@ public partial class ProjectFG
         }
     }
 
+    /// <summary>
+    /// Luo ja lisää hp:eet pelaajille
+    /// </summary>
     private void HpBar()
     {
         ProgressBar hpBar1 = new ProgressBar(MaxHp, 20);
@@ -70,6 +94,14 @@ public partial class ProjectFG
         Add(hpTeksti2);
     }
 
+    /// <summary>
+    /// Luo ammuksen ja ampuu sen
+    /// </summary>
+    /// <param name="ampuja">Ampuva pelaaja</param>
+    /// <param name="kohde">Pelaaja johon ammus osuu</param>
+    /// <param name="animaatio">Ampumisanimaatio </param>
+    /// <param name="ampumiskuvat">Ampumiskuvat animaatiolle </param>
+    /// <param name="aani">Ampumisääni </param>
     private void Ampuminen(PlatformCharacter ampuja, PlatformCharacter kohde, Animation animaatio, Image[] ampumiskuvat, SoundEffect aani)
     {
         PhysicsObject ammus = new PhysicsObject(2, 1);
@@ -91,6 +123,11 @@ public partial class ProjectFG
         AddCollisionHandler(ammus, kohde, OsuukoPelaajaan);
     }
 
+    /// <summary>
+    /// Katsoo osuuko pelaajaan ja vähentää hp
+    /// </summary>
+    /// <param name="ammus">Ammus, joka ammutaan</param>
+    /// <param name="kohde">Pelaaja, johon osutaan</param>
     private void OsuukoPelaajaan(PhysicsObject ammus, PhysicsObject kohde)
     {
         if (kohde == _pelaaja1)
@@ -106,6 +143,11 @@ public partial class ProjectFG
     }
 
 
+    /// <summary>
+    /// Tässä tehään pelaajan kuoleminen ja voittaminen
+    /// </summary>
+    /// <param name="_hp1">Pelaaja 1 hp:eet</param>
+    /// <param name="_hp2">Pelaaja 2 hp:eet</param>
     private void PelaajaKuoli()
     {
         if (_hp1.Value <= 0)
