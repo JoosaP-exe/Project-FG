@@ -28,8 +28,7 @@ namespace ProjectFG
         private Image _voitto1 = LoadImage("pleijer1voitto.png");
         /// <summary>Pelaaja 2 voiton kuva</summary>
         private Image _voitto2 = LoadImage("pleijer2voitto.png");
-        /// <summary>Ajan loppumisen kuva</summary>
-        private Image _aikaLoppui = LoadImage("aikaloppui.png");
+
         /// <summary>Ääniefekti ampumiselle</summary>
         private SoundEffect _gunShot = LoadSoundEffect("peakgun.wav");
         /// <summary>Pelaaja 1 ampumisanimaatiot</summary>
@@ -47,6 +46,12 @@ namespace ProjectFG
         /// </summary>
         public override void Begin()
         {
+            _hp2 = new DoubleMeter(MaxHp, 0, MaxHp);
+            _hp2.LowerLimit += PelaajaKuoli;
+
+            _hp1 = new DoubleMeter(MaxHp, 0, MaxHp);
+            _hp1.LowerLimit += PelaajaKuoli;
+
             Image menuKuva = LoadImage("main-menu.png");
             Level.Background.Image = menuKuva;
 
@@ -67,8 +72,7 @@ namespace ProjectFG
         /// </summary>
         public void Alotus()
         {
-
-            pelaajienMaara = 0;
+            ClearAll();
             _pelaaja1 = null;
             _pelaaja2 = null;
             Gravity = new Vector(0, -1000);
@@ -79,7 +83,6 @@ namespace ProjectFG
             LuoKentta();
             LisaaNappaimet();
             HpBar();
-            Ajastin();
 
             Camera.Position = new Vector(0, 0);
             Camera.ZoomFactor = 2;
@@ -99,8 +102,8 @@ namespace ProjectFG
         {
             TileMap kentta = TileMap.FromLevelAsset("kentta1.txt");
             kentta.SetTileMethod('#', LisaaTaso);
-            kentta.SetTileMethod('N', LisaaPelaaja);
-            kentta.SetTileMethod('M', LisaaPelaaja);
+            kentta.SetTileMethod('N', LisaaPelaaja, 1);
+            kentta.SetTileMethod('M', LisaaPelaaja, 2);
             kentta.Execute(RuudunKoko, RuudunKoko);
 
             Level.Background.Image = _taustaKuva;
@@ -128,14 +131,14 @@ namespace ProjectFG
             Keyboard.Listen(Key.A, ButtonState.Down, Liikuta, "Liikkuu vasemmalle", _pelaaja1, -Nopeus);
             Keyboard.Listen(Key.D, ButtonState.Down, Liikuta, "Liikkuu oikealle", _pelaaja1, Nopeus);
             Keyboard.Listen(Key.W, ButtonState.Pressed, Hyppaa, "Pelaaja hyppää", _pelaaja1, HyppyNopeus);
-            Keyboard.Listen(Key.F, ButtonState.Pressed, () => Ampuminen(_pelaaja1, _pelaaja2, new Animation(_bAmpuminen), _bAmpuminen, _gunShot), "Pelaaja lyö");
+            Keyboard.Listen(Key.F, ButtonState.Pressed, () => Ampuminen(_pelaaja1, _pelaaja2, new Animation(_bAmpuminen), _bAmpuminen, _gunShot), "Pelaaja ampuu");
 
 
             Keyboard.Listen(Key.Left, ButtonState.Down, Liikuta, "Liikkuu vasemmalle", _pelaaja2, -Nopeus);
             Keyboard.Listen(Key.Right, ButtonState.Down, Liikuta, "Liikkuu oikealle", _pelaaja2, Nopeus);
             Keyboard.Listen(Key.Up, ButtonState.Pressed, Hyppaa, "Pelaaja hyppää", _pelaaja2, HyppyNopeus);
             Keyboard.Listen(Key.Down, ButtonState.Pressed, Hyppaa, "Pelaaja ALAS!", _pelaaja2, -HyppyNopeus);
-            Keyboard.Listen(Key.RightControl, ButtonState.Pressed, () => Ampuminen(_pelaaja2, _pelaaja1, new Animation(_rAmpuminen), _rAmpuminen, _gunShot), "Pelaaja lyö");
+            Keyboard.Listen(Key.RightControl, ButtonState.Pressed, () => Ampuminen(_pelaaja2, _pelaaja1, new Animation(_rAmpuminen), _rAmpuminen, _gunShot), "Pelaaja ampuu");
 
             Keyboard.Listen(Key.Escape, ButtonState.Pressed, Pausetus, "Pysäyttää pelin");
         }
@@ -176,7 +179,7 @@ namespace ProjectFG
                 {
                     _pauseValikko = new MultiSelectWindow("TAUKO", "ALOITA ALUSTA", "POISTU");
                     _pauseValikko.Closed += (handler) => SuljeValikko();
-                    _pauseValikko.AddItemHandler(0, AloitaAlusta);
+                    _pauseValikko.AddItemHandler(0, Alotus);
                     _pauseValikko.AddItemHandler(1, Exit);
                 }
 
@@ -198,35 +201,6 @@ namespace ProjectFG
                 _pauseValikko = null;
                 Pause();
             }
-        }
-
-
-        /// <summary>
-        /// Aloittaa pelin alusta ja alustaa kaiken alusta
-        /// </summary>
-        private void AloitaAlusta()
-        {
-
-        pelaajienMaara = 0;
-        _pelaaja1 = null;
-        _pelaaja2 = null;
-
-            ClearAll();
-            LuoKentta();
-
-            
-            _hp1.Value = 200;
-            _hp2.Value = 200;
-
-            HpBar();
-            LisaaNappaimet();
-            Ajastin();
-
-            Camera.Position = new Vector(0, 0);
-            Camera.ZoomFactor = 2;
-            Camera.StayInLevel = false;
-
-            MasterVolume = 0.5;
         }
 
     }

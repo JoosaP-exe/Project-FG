@@ -12,51 +12,30 @@ public partial class ProjectFG
     private const double HyppyNopeus = 500;
     private const int RuudunKoko = 40;
     private const double MaxHp = 200;
-    private double MaxAika = 120;
-
     private PlatformCharacter _pelaaja1;
-
     private PlatformCharacter _pelaaja2;
     private DoubleMeter _hp1 = new DoubleMeter(200, 0, 200);
     private DoubleMeter _hp2 = new DoubleMeter(200, 0, 200);
-    private ProgressBar[] hpBar = new ProgressBar[2];
-    private Label[] hpTeksti = new Label[2];
-   /// <summary>Pelaaja 1 voittokuva</summary>
-    private GameObject _gameVoitto1;
-    /// <summary>Pelaaja 2 voittokuva</summary>
-    private GameObject _gameVoitto2;
 
-    private Label tasapeli;
-    private int pelaajienMaara = 0;
-
-    private void LisaaPelaaja(Vector paikka, double leveys, double korkeus)
+    private void LisaaPelaaja(Vector paikka, double leveys, double korkeus, int pelaajaNumero)
     {
-        pelaajienMaara++;
-        if (pelaajienMaara == 1)
+        if (pelaajaNumero == 1)
         {
-            if (_pelaaja1 == null)
-                _pelaaja1 = new PlatformCharacter(21, 32);
+            _pelaaja1 = new PlatformCharacter(21, 32);
             _pelaaja1.Position = paikka;
             _pelaaja1.Mass = 4.0;
             _pelaaja1.Image = _pelaajaKuva1;
             _pelaaja1.CollisionIgnoreGroup = 1;
             Add(_pelaaja1);
-
-            _hp1 = new DoubleMeter(MaxHp, 0, MaxHp);
-            _hp1.LowerLimit += delegate { PelaajaKuoli(_hp1, _hp2); };
         }
-        else if (pelaajienMaara == 2)
+        else if (pelaajaNumero == 2)
         {
-            if (_pelaaja2 == null)
-                _pelaaja2 = new PlatformCharacter(21, 32);
+            _pelaaja2 = new PlatformCharacter(21, 32);
             _pelaaja2.Position = paikka;
             _pelaaja2.Mass = 4.0;
             _pelaaja2.Image = _pelaajaKuva2;
             _pelaaja2.CollisionIgnoreGroup = 2;
             Add(_pelaaja2);
-
-            _hp2 = new DoubleMeter(MaxHp, 0, MaxHp);
-            _hp2.LowerLimit += delegate { PelaajaKuoli(_hp1, _hp2); };
         }
     }
 
@@ -127,20 +106,11 @@ public partial class ProjectFG
     }
 
 
-    private void PelaajaKuoli(DoubleMeter _hp1, DoubleMeter _hp2)
+    private void PelaajaKuoli()
     {
         if (_hp1.Value <= 0)
         {
-            Console.WriteLine("Pelaaja 2 voitti!");
-            if (_pelaaja1 != null && !_pelaaja1.IsDestroyed)
-            {
-                _pelaaja1.Mass = 0.4925;
-                _pelaaja1.Image = _pelaajaKuva1;
-                _pelaaja1.CollisionIgnoreGroup = 1;
-                _pelaaja1.Velocity = new Vector(300, 200);
-                _pelaaja1.IgnoresGravity = true;
-            }
-            _gameVoitto2 = new GameObject(1536, 1024);
+            GameObject _gameVoitto2 = new GameObject(1536, 1024);
             _gameVoitto2.Image = _voitto2;
             _gameVoitto2.Position = new Vector(0, 60);
             _gameVoitto2.Size = new Vector(384, 256);
@@ -148,25 +118,10 @@ public partial class ProjectFG
 
             if (_pelaaja1 != null && !_pelaaja1.IsDestroyed)
                 _pelaaja1.Destroy();
-
-            Jypeli.Timer.SingleShot(5.0, () =>
-            {
-                ClearAll();
-                Begin();
-            });
         }
         else if (_hp2.Value <= 0)
         {
-            Console.WriteLine("Pelaaja 1 voitti!");
-            if (_pelaaja2 != null && !_pelaaja2.IsDestroyed)
-            {
-                _pelaaja2.Mass = 0.4925;
-                _pelaaja2.Image = _pelaajaKuva2;
-                _pelaaja2.CollisionIgnoreGroup = 2;
-                _pelaaja2.Velocity = new Vector(-300, 200);
-                _pelaaja2.IgnoresGravity = true;
-            }
-            _gameVoitto1 = new GameObject(1536, 1024);
+            GameObject _gameVoitto1 = new GameObject(1536, 1024);
             _gameVoitto1.Image = _voitto1;
             _gameVoitto1.Position = new Vector(0, 60);
             _gameVoitto1.Size = new Vector(384, 256);
@@ -175,37 +130,12 @@ public partial class ProjectFG
             if (_pelaaja2 != null && !_pelaaja2.IsDestroyed)
                 _pelaaja2.Destroy();
 
-            Jypeli.Timer.SingleShot(5.0, () =>
-            {
-                ClearAll();
-                Begin();
-            });
         }
-
-        return;
-    }
-
-
-    private void Ajastin()
-    {
-        Timer ajastin = new Timer();
-        ajastin.Interval = 1.0;
-        ajastin.Timeout += () =>
+        Timer.SingleShot(5.0, () =>
         {
-            MaxAika--;
-            if (MaxAika <= 0)
-            {
-                tasapeli = new Label("Tasapeli!")
-                {
-                    Position = new Vector(0, 60),
-                    TextColor = Color.White,
-                    Color = Color.Transparent
-                };
-                Add(tasapeli);
-                MaxAika = 0;
-            }
-        };
-        ajastin.Start();
+            ClearAll();
+            Begin();
+        });
     }
 }
 
